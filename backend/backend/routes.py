@@ -11,3 +11,13 @@ def hello_world():
         "test_id": 1,
         "message": "hello world"
     }
+
+def add_questionnaire_entry(body):
+    if body.get("corona_positive"):
+        return (
+            {
+                "error": "He's dead Jim!"
+            },
+            400,
+        )
+    return {}, 200
