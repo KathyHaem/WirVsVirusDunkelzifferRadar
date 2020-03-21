@@ -37,10 +37,6 @@ paths:
         400:
           description: Invalid status value
           content: {}
-      security:
-      - petstore_auth:
-        - write:pets
-        - read:pets
 components:
   schemas:
     Test:
