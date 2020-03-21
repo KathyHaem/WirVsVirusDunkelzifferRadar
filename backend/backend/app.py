@@ -1,7 +1,11 @@
+""" Module containing basic connexion backend. """
+
 import os
 
 import connexion
 from dotenv import load_dotenv
+
+from api.routes import hello_world
 
 load_dotenv()
 
@@ -16,7 +20,6 @@ app.add_api(
     # validator_map={"body": None},
 )
 application = app.app
-
 
 if __name__ == "__main__":
     app.run(port=8080, server="gevent")
