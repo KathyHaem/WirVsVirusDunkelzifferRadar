@@ -1,4 +1,4 @@
-""" Module holding all routes defined in ../app.yml """
+""" Module holding all routes defined in app.yml """
 
 def hello_world():
     """
