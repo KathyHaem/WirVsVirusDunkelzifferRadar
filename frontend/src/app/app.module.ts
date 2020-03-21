@@ -9,6 +9,7 @@ import { ApiModule } from "../api";
 import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ButtonsModule} from "ngx-bootstrap";
+import { ProgressbarModule } from "ngx-bootstrap/progressbar";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {ButtonsModule} from "ngx-bootstrap";
     ApiModule,
     HttpClientModule,
     ReactiveFormsModule,
-    ButtonsModule
+    ButtonsModule,
+    ProgressbarModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

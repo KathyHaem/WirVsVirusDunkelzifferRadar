@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+  --blue-gray: rgba(108, 132, 136, 0.31);
+}
+
 h1,
 h2,
 h3,
@@ -10,7 +14,11 @@ h6 {
 }
 
 .spacer {
-  flex: 1;
+  margin: 2em;
+}
+
+.btn {
+  border: 1px solid var(--blue-gray);
 }
 
 .toolbar {

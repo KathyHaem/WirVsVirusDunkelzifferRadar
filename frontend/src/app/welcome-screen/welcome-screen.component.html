@@ -1,4 +1,5 @@
 <h1>Hallo!</h1>
+<div class="spacer"></div>
 <div>
   <h3>Warst du schon mal hier?</h3>
   <form [formGroup]="myForm" class="form-inline">
@@ -11,5 +12,9 @@
       </div>
     </div>
   </form>
+
+  <div class="spacer"></div>
+
+  <app-progress-bar [progressValue]="20"></app-progress-bar>
 
 </div>
