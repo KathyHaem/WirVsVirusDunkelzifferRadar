@@ -3,11 +3,15 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { TestComponentComponent } from './test-component/test-component.component';
+import { WelcomeScreenComponent } from './welcome-screen/welcome-screen.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponentComponent
+    TestComponentComponent,
+    WelcomeScreenComponent,
+    ProgressBarComponent
   ],
   imports: [
     BrowserModule
