@@ -19,7 +19,7 @@ servers:
 tags:
 - name: test
 paths:
-  /helloWorld:
+  /hello_world:
     get:
       summary: Gets Hello World Message
       operationId: helloWorld
