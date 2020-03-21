@@ -7,6 +7,8 @@ import { WelcomeScreenComponent } from './welcome-screen/welcome-screen.componen
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { ApiModule } from "../api";
 import {HttpClientModule} from "@angular/common/http";
+import {ReactiveFormsModule} from "@angular/forms";
+import {ButtonsModule} from "ngx-bootstrap";
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import {HttpClientModule} from "@angular/common/http";
   imports: [
     BrowserModule,
     ApiModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    ButtonsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

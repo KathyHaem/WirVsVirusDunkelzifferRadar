@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 
 @Component({
   selector: 'app-welcome-screen',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomeScreenComponent implements OnInit {
 
-  constructor() { }
+  public seenBefore = new FormControl("no");
+  public myForm: FormGroup;
 
-  ngOnInit(): void {
+  constructor(private formBuilder: FormBuilder) {}
+
+  ngOnInit() {
+    this.myForm = this.formBuilder.group({
+      radio: 'Nein'
+    });
   }
-
 }
