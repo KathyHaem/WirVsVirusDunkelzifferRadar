@@ -14,7 +14,17 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@wirvsvirus/api-client": [
+        "dist/wirvsvirus/api-client/wirvsvirus-api-client",
+        "dist/wirvsvirus/api-client"
+      ],
+      "@wirvsvirus/api-client-lib": [
+        "dist/wirvsvirus/api-client-lib/wirvsvirus-api-client-lib",
+        "dist/wirvsvirus/api-client-lib"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

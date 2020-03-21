@@ -119,6 +119,86 @@
           }
         }
       }
+    },
+    "@wirvsvirus/api-client": {
+      "projectType": "library",
+      "root": "projects/wirvsvirus/api-client",
+      "sourceRoot": "projects/wirvsvirus/api-client/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/wirvsvirus/api-client/tsconfig.lib.json",
+            "project": "projects/wirvsvirus/api-client/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/wirvsvirus/api-client/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/wirvsvirus/api-client/src/test.ts",
+            "tsConfig": "projects/wirvsvirus/api-client/tsconfig.spec.json",
+            "karmaConfig": "projects/wirvsvirus/api-client/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/wirvsvirus/api-client/tsconfig.lib.json",
+              "projects/wirvsvirus/api-client/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@wirvsvirus/api-client-lib": {
+      "projectType": "library",
+      "root": "projects/wirvsvirus/api-client-lib",
+      "sourceRoot": "projects/wirvsvirus/api-client-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/wirvsvirus/api-client-lib/tsconfig.lib.json",
+            "project": "projects/wirvsvirus/api-client-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/wirvsvirus/api-client-lib/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/wirvsvirus/api-client-lib/src/test.ts",
+            "tsConfig": "projects/wirvsvirus/api-client-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/wirvsvirus/api-client-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/wirvsvirus/api-client-lib/tsconfig.lib.json",
+              "projects/wirvsvirus/api-client-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "frontend"
 }
