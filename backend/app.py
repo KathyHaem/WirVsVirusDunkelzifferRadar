@@ -5,7 +5,7 @@ import os
 import connexion
 from dotenv import load_dotenv
 
-from routes import hello_world
+from backend.routes import hello_world
 
 load_dotenv()
 
