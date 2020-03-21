@@ -18,6 +18,7 @@ servers:
   description: Dev server
 tags:
 - name: test
+- name: questionnaire
 paths:
   /hello_world:
     get:
@@ -37,6 +38,32 @@ paths:
         400:
           description: Invalid status value
           content: {}
+  /send_questionnaire_entry:
+    put:
+      tags:
+        - "questionnaire"
+      summary: "Put a new questionnaire entry."
+       operationId: "app.add_questionnaire_entry"
+       consumes:
+       - "application/json"
+       - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Questionnaire entry that should be added to the database."
+          required: true
+          schema:
+            $ref: "#/definitions/Questionnaire"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Questionnaire not found"
+        405:
+          description: "Validation exception"
 components:
   schemas:
     Test:
@@ -51,6 +78,88 @@ components:
           type: string
       xml:
         name: Category
+    Questionnaire:
+      type: object
+      required:
+      - first_time
+      - gender
+      - age
+      - zip_code
+      - cough
+      - fever
+      - nose_affected
+      - pain
+      - diarrhea
+      - throat
+      - dyspnea
+      - fatigue
+      - corona_test
+      - asthma
+      - allergy
+      - blood_pressure
+      - diabetes
+      - other_illnes
+      properties:
+        first_time:
+          type: boolean
+        gender:
+          type: string
+        age:
+          type: integer
+          format: int64
+        zip_code:
+          type: integer
+          format: int64
+        has_cough:
+          type: boolean
+        cough_dry:
+          type: boolean
+        cough_productive:
+          type: boolean
+        cough_painful:
+          type: boolean
+        fever:
+          type: boolean
+        fever_suspected:
+          type: boolean
+        fever_confirmed:
+          type: boolean
+        nose_affected:
+          type: boolean
+        pain:
+          type: boolean
+        pain_head:
+          type: boolean
+        pain_limbs:
+          type: boolean
+        diarrhea:
+          type: boolean
+        throat:
+          type: boolean
+        dyspnea:
+          type: boolean
+        fatigue:
+          type: boolean
+        corona_test:
+          type: boolean
+        corona_positive:
+          type: boolean
+        corona_date:
+          type: string
+          format: date
+        pre_illness:
+          type: string
+        asthma:
+          type: boolean
+        allergy:
+          type: boolean
+        blood_pressure:
+          type: boolean
+        diabetes:
+          type: boolean
+        other_illnes:
+          type: boolean
+
   securitySchemes:
     oauth2-dev:
       type: oauth2
