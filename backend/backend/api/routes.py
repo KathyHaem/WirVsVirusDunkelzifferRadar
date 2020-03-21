@@ -1,0 +1,2 @@
+from connexion import NoContent
+
