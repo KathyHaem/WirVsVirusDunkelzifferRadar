@@ -7,6 +7,7 @@ RUN set -ex \
     && apt-get update \
     && apt-get -y upgrade \
     && apt-get install -y libev-dev gcc curl git \
+    && apt-get install -y libpq-dev \
     && curl -sSL \
        https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python \
     && pip install --upgrade pip gunicorn \
