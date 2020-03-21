@@ -17,6 +17,8 @@ import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {QuestionnaireComponent} from './questionnaire/questionnaire.component';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import { MapComponent } from './map/map.component';
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
     CoronaScreenComponent,
     ProgressBarComponent,
     QuestionnaireComponent,
-    ExistingConditionsScreenComponent
+    ExistingConditionsScreenComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +44,7 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    ChartModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
