@@ -13,6 +13,15 @@ def hello_world():
     }
 
 def add_questionnaire_entry(body):
+    """
+    Add Questionnaire entry to database.
+
+    Args:
+        body (dict): Content of questionnaire sent by frontend.
+
+    Returns:
+        tuple: status message.
+    """
     if body.get("corona_positive"):
         return (
             {
