@@ -16,11 +16,36 @@ class DBConnector:
             self._setup_table()
 
     def _setup_table(self):
-        #TODO: Missing column names, keys and data types
+        #TODO: Missing ID?
         self.cursor.execute('CREATE TABLE dunkelziffer_radar ('
-                            ''
-                            ''
-                            ');')
+                            'first_time BOOLEAN'
+                            'gender VARCHAR'
+                            'age INTEGER'
+                            'zip_code INTEGER'
+                            'has_cough BOOLEAN'
+                            'cough_dry BOOLEAN'
+                            'cough_productive BOOLEAN'
+                            'cough_painful BOOLEAN'
+                            'fever BOOLEAN'
+                            'fever_suspected BOOLEAN'
+                            'fever_confirmed BOOLEAN'
+                            'nose_affected BOOLEAN'
+                            'pain BOOLEAN'
+                            'pain_head BOOLEAN'
+                            'pain_limbs BOOLEAN'
+                            'diarrhea BOOLEAN'
+                            'throat BOOLEAN'
+                            'dyspnea BOOLEAN'
+                            'fatigue BOOLEAN'
+                            'corona_test BOOLEAN'
+                            'corona_positive BOOLEAN'
+                            'corona_date DATE'
+                            'pre_illness VARCHAR'
+                            'asthma BOOLEAN'
+                            'allergy BOOLEAN'
+                            'blood_pressure BOOLEAN'
+                            'diabetes BOOLEAN'
+                            'other_illness BOOLEAN);')
         self.conn.commit()
 
     def close_connection(self):
