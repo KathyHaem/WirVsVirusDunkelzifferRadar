@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {TestService} from '@wirvsvirus/api-client';
+import { TestService } from "../../api";
 
 @Component({
   selector: 'app-test-component',
@@ -10,16 +10,11 @@ export class TestComponentComponent implements OnInit {
 
   constructor(private testService: TestService) { }
 
+  public testString: string = "";
+
   ngOnInit(): void {
-  }
-
-  private helloWorld(): string
-  {
-    let testString = "";
-    this.testService.appHelloWorld().toPromise().then((tests) => {
-      tests.forEach((test) => testString.concat(testString, test.testId.toString()));
+    this.testService.appHelloWorld().toPromise().then((response) => {
+      this.testString = response.toString();
     });
-    return testString;
   }
-
 }

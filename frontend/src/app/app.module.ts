@@ -5,7 +5,8 @@ import { AppComponent } from './app.component';
 import { TestComponentComponent } from './test-component/test-component.component';
 import { WelcomeScreenComponent } from './welcome-screen/welcome-screen.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
-import { ApiModule } from "@wirvsvirus/api-client-lib";
+import { ApiModule } from "../api";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -16,8 +17,8 @@ import { ApiModule } from "@wirvsvirus/api-client-lib";
   ],
   imports: [
     BrowserModule,
-    // TODO WTF?
-    //ApiModule.forRoot(Identity)
+    ApiModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
