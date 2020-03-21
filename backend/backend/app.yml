@@ -22,7 +22,7 @@ paths:
   /hello_world:
     get:
       summary: Gets Hello World Message
-      operationId: helloWorld
+      operationId: app.hello_world
       tags:
       - test
       responses:
