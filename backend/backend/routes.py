@@ -30,3 +30,14 @@ def add_questionnaire_entry(body):
             400,
         )
     return {}, 200
+
+def get_chart(chart_id):
+    """
+
+    Args:
+        body:
+
+    Returns:
+
+    """
+    return {"chart_id": chart_id, "x":[1,2,3], "y":[2,4,8]}
