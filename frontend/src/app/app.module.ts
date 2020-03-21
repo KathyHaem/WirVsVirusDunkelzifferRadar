@@ -10,13 +10,16 @@ import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ButtonsModule} from "ngx-bootstrap";
 import { ProgressbarModule } from "ngx-bootstrap/progressbar";
+import { MapComponent } from './map/map.component';
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestComponentComponent,
     WelcomeScreenComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ import { ProgressbarModule } from "ngx-bootstrap/progressbar";
     HttpClientModule,
     ReactiveFormsModule,
     ButtonsModule,
-    ProgressbarModule.forRoot()
+    ProgressbarModule.forRoot(),
+    ChartModule
   ],
   providers: [],
   bootstrap: [AppComponent]
