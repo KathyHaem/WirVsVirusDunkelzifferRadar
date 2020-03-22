@@ -25,7 +25,7 @@ export class ResponseCompilerService {
 
   addWelcomeScreenData(value: WelcomeScreenResponse): void {
     console.log(value);
-    this.response.seenBefore = value.seenBefore;
+    this.response.seenBefore = value.seenBefore === "yes";
     if (value.personalData) {
       this.response.personalData = <PersonalData>{};
       this.response.personalData.age = value.personalData.age || undefined;
@@ -64,5 +64,9 @@ export class ResponseCompilerService {
 
   addConditionsScreenData(value: ConditionsScreenResponse): void {
     console.log(value);
+  }
+
+  public submitData(): void {
+    // TODO send to API
   }
 }

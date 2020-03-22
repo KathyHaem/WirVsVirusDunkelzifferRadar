@@ -18,6 +18,8 @@ import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {QuestionnaireComponent} from './questionnaire/questionnaire.component';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import { SubmitScreenComponent } from './submit-screen/submit-screen.component';
+import { ThankYouScreenComponent } from './thank-you-screen/thank-you-screen.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
     MapComponent,
     QuestionnaireComponent,
     SymptomsScreenComponent,
-    ExistingConditionsScreenComponent
+    ExistingConditionsScreenComponent,
+    SubmitScreenComponent,
+    ThankYouScreenComponent
   ],
   imports: [
     BrowserModule,

@@ -6,7 +6,7 @@ export class FormResponse {
 }
 
 export interface WelcomeScreenResponse {
-  seenBefore: boolean;
+  seenBefore: string;
   personalData?: PersonalData;
 }
 

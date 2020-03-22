@@ -4,6 +4,8 @@
                      (complete)="this.completedSymptomsScreen($event)"></app-symptoms-screen>
 <app-corona-screen *ngIf="this.coronaScreenActive"
                    (complete)="this.completedCoronaTestScreen($event)"></app-corona-screen>
-
 <app-existing-conditions-screen *ngIf="this.existingConditionsScreenActive"
                                 (complete)="this.completeConditionsScreen($event)"></app-existing-conditions-screen>
+<app-submit-screen *ngIf="this.submitScreenActive"
+                   (complete)="this.submittedData($event)"></app-submit-screen>
+<app-thank-you-screen *ngIf="this.thankYouScreenActive"></app-thank-you-screen>
