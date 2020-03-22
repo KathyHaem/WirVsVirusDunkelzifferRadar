@@ -1,5 +1,3 @@
-
-
 # Fragensammlung
 
 [[XX für freie Eingabe, O für Ankreuzkästchen, Einrückungen erscheinen nur bei Ankreuzen der übergeordneten Antwort]]
