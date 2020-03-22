@@ -6,9 +6,9 @@ import connexion
 from dotenv import load_dotenv
 from flask_cors import CORS
 
-from backend.routes import hello_world, add_questionnaire_entry, get_chart
+load_dotenv(".env")
 
-load_dotenv()
+from backend.routes import hello_world, add_questionnaire_entry, get_chart
 
 app = connexion.App(
     __name__, options={"swagger_ui": os.environ.get("SWAGGER_UI", False)}
