@@ -8,10 +8,12 @@ import {Component, Input, OnInit} from '@angular/core';
 export class ProgressBarComponent implements OnInit {
 
   @Input() public progressValue: number;
+  @Input() public type: string;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.type = this.type ? this.type : ""
   }
 
 }

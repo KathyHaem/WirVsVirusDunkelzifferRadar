@@ -1,68 +1,27 @@
 <div class="spacer"></div>
 <div>
 
-  <form action="" [formGroup]="symptomsScreenForm" (ngSubmit)="this.onSubmit()">
+  <form action="" [formGroup]="conditionsForm" (ngSubmit)="this.onSubmit()">
     <h3>Hast du Vorerkrankungen?</h3>
     <div class="spacer"></div>
     <div class="btn-group-vertical">
-      <div>
-        <label><input type="radio" id="cough" formControlName="coughForm" (click)="isCoughCollapsed = !isCoughCollapsed" [attr.aria-expanded]="!isCoughCollapsed" aria-controls="collapseCough"><span> Husten</span></label>
-        <div id="collapseCough" [collapse]="isCoughCollapsed" [isAnimated]="true">
-          <div class="btn-group-vertical" formGroupName="coughData" style="margin-left: 20px">
-            <label><input type="radio" id="cough_dry" formControlName="coughDryForm"><span> Trocken</span></label>
-            <label><input type="radio" id="cough_productive" formControlName="coughProductiveForm"><span> Schleimig</span></label>
-            <label><input type="radio" id="cough_painful" formControlName="coughPainfulForm"><span> Schmerzhaft</span></label>
-          </div>
-        </div>
-      </div>
-      <div>
-        <label><input type="radio" id="fever" formControlName="feverForm" (click)="isFeverCollapsed = !isFeverCollapsed" [attr.aria-expanded]="!isFeverCollapsed" aria-controls="collapseFever"><span> Fieber</span></label>
-        <div id="collapseFever" [collapse]="isFeverCollapsed" [isAnimated]="true">
-          <div class="btn-group-vertical" formGroupName="feverData" style="margin-left: 20px">
-            <label><input type="radio" id="fever_suspected" formControlName="feverSuspectedForm"><span> fiebriges Gefühl</span></label>
-            <label><input type="radio" id="fever_confirmed" formControlName="feverConfirmedForm"><span> bestätigt durch Messung</span></label>
-          </div>
-        </div>
-      </div>
-      <div>
-        <label><input type="radio" id="nose_affected" formControlName="noseForm"><span> Schnupfen, verstopfte Nase, laufende Nase, (häufiges) Niesen</span></label>
-      </div>
-      <div>
-        <label><input type="radio" id="pain" formControlName="painForm" (click)="isPainCollapsed = !isPainCollapsed" [attr.aria-expanded]="!isPainCollapsed" aria-controls="collapsePain"><span> Schmerzen</span></label>
-        <div id="collapsePain" [collapse]="isPainCollapsed" [isAnimated]="true">
-          <div class="btn-group-vertical" formGroupName="painData" style="margin-left: 20px">
-            <label><input type="radio" id="pain_head" formControlName="painHeadForm"><span> Kopfschmerzen</span></label>
-            <label><input type="radio" id="pain_limbs" formControlName="painLimbsForm"><span> Gliederschmerzen</span></label>
-          </div>
-        </div>
-      </div>
-      <div>
-        <label><input type="radio" id="diarrhea" formControlName="diarrheaForm"><span> Durchfall</span></label>
-      </div>
-      <div>
-        <label><input type="radio" id="throat" formControlName="throatForm"><span> Halsbeschwerden (Schluckbeschwerden, Halskratzen)</span></label>
-      </div>
-      <div>
-        <label><input type="radio" id="dyspnea" formControlName="dyspneaForm"><span> Kurzatmigkeit</span></label>
-      </div>
-      <div>
-        <label><input type="radio" id="fatigue" formControlName="fatigueForm"><span> Erschöpfung</span></label>
-      </div>
+      <label><input type="radio" id="asthma" formControlName="asthma"><span> Asthma</span></label>
+      <label><input type="radio" id="allergies" formControlName="allergies"><span> Heuschnupfen</span></label>
+      <label><input type="radio" id="hypertension" formControlName="hypertension"><span> Bluthochdruck</span></label>
+      <label><input type="radio" id="diabetes" formControlName="diabetes"><span> Diabetes</span></label>
+      <label><input type="radio" id="other" formControlName="other"><span> Andere</span></label>
     </div>
-
-
-
     <br>
 
     <div class="spacer"></div>
     <div class="right-align">
       <button type="submit"
-              [disabled]="symptomsScreenForm.dirty"
+              [disabled]="conditionsForm.dirty"
               class="btn btn-default">
         Keine
       </button>
       <button type="submit"
-              [disabled]="symptomsScreenForm.pristine"
+              [disabled]="conditionsForm.pristine"
               class="btn btn-default" style="margin-left: 8px">
         Weiter
       </button>
@@ -70,6 +29,6 @@
 
   </form>
 
-  <app-progress-bar [progressValue]="40"></app-progress-bar>
+  <app-progress-bar [progressValue]="80"></app-progress-bar>
 
 </div>

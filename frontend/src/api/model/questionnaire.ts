@@ -38,5 +38,5 @@ export interface Questionnaire {
     allergy: boolean;
     bloodPressure: boolean;
     diabetes: boolean;
-    otherIllnes: boolean;
+    otherIllness: boolean;
 }

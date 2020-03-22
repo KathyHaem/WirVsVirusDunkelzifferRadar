@@ -11,14 +11,15 @@ import {ExistingConditionsScreenComponent} from './existing-conditions-screen/ex
 import {ProgressBarComponent} from './progress-bar/progress-bar.component';
 import {ApiModule} from "../api";
 import {HttpClientModule} from "@angular/common/http";
+import {MapComponent} from './map/map.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BsDropdownModule, ButtonsModule} from "ngx-bootstrap";
 import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {QuestionnaireComponent} from './questionnaire/questionnaire.component';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import { MapComponent } from './map/map.component';
-import { ChartModule } from 'angular-highcharts';
+import { SubmitScreenComponent } from './submit-screen/submit-screen.component';
+import { ThankYouScreenComponent } from './thank-you-screen/thank-you-screen.component';
 
 @NgModule({
   declarations: [
@@ -27,9 +28,12 @@ import { ChartModule } from 'angular-highcharts';
     SymptomsScreenComponent,
     CoronaScreenComponent,
     ProgressBarComponent,
+    MapComponent,
     QuestionnaireComponent,
+    SymptomsScreenComponent,
     ExistingConditionsScreenComponent,
-    MapComponent
+    SubmitScreenComponent,
+    ThankYouScreenComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +48,6 @@ import { ChartModule } from 'angular-highcharts';
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    ChartModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

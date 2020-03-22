@@ -11,7 +11,8 @@ export class QuestionnaireComponent implements OnInit {
   public symptomsScreenActive: boolean;
   public coronaScreenActive: boolean;
   public existingConditionsScreenActive: boolean;
-  public goingOutsideScreenActive: boolean;
+  public submitScreenActive: boolean;
+  public thankYouScreenActive: boolean;
 
   constructor(private responseCompilerService: ResponseCompilerService) {
   }
@@ -21,11 +22,11 @@ export class QuestionnaireComponent implements OnInit {
     this.symptomsScreenActive = false;
     this.coronaScreenActive = false;
     this.existingConditionsScreenActive = false;
-    this.goingOutsideScreenActive = false;
+    this.submitScreenActive = false;
   }
 
   completedWelcomeScreen(event: boolean) {
-    if (event == false) {
+    if (event === false) {
       return;
     }
     this.welcomeScreenActive = false;
@@ -33,7 +34,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   completedSymptomsScreen(event: boolean) {
-    if (event == false) {
+    if (event === false) {
       return;
     }
     this.symptomsScreenActive = false;
@@ -41,7 +42,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   completedCoronaTestScreen(event: boolean) {
-    if (event == false) {
+    if (event === false) {
       return;
     }
     this.coronaScreenActive = false;
@@ -49,6 +50,22 @@ export class QuestionnaireComponent implements OnInit {
       this.existingConditionsScreenActive = true;
       return;
     }
-    this.goingOutsideScreenActive = true;
+    this.submitScreenActive = true;
+  }
+
+  completeConditionsScreen(event: boolean) {
+    if (event === false) {
+      return;
+    }
+    this.existingConditionsScreenActive = false;
+    this.submitScreenActive = true;
+  }
+
+  submittedData(event: boolean) {
+    if (event === false) {
+      return;
+    }
+    this.submitScreenActive = false;
+    this.thankYouScreenActive = true;
   }
 }

@@ -1,34 +1,50 @@
 export class FormResponse {
   seenBefore: boolean;
   personalData?: PersonalData;
-  symptoms?: Symptoms;
   testStatus?: TestStatus;
 }
 
 export interface WelcomeScreenResponse {
-  seenBefore: boolean;
+  seenBefore: string;
   personalData?: PersonalData;
 }
 
 export interface SymptomsScreenResponse {
-  symptoms?: Symptoms;
+  cough?: boolean;
+  fever?: boolean;
+  nose?: boolean;
+  diarrhea?: boolean;
+  throat?: boolean;
+  dyspnea?: boolean;
+  fatigue?: boolean;
+  pain?: boolean;
+  coughData?: CoughData;
+  feverData?: FeverData;
+  painData?: PainData;
 }
 
 export interface CoronaScreenResponse {
-  testStatus?: TestStatus;
-}
-
-interface ExistingConditions {
+  coronaTested: boolean;
+  positiveTest?: boolean;
+  testDate?: string;
 }
 
 export interface ConditionsScreenResponse {
   existingConditions?: ExistingConditions;
 }
 
+export interface ExistingConditions {
+  asthma?: boolean;
+  allergies?: boolean;
+  hypertension?: boolean;
+  diabetes?: boolean;
+  other?: boolean;
+}
+
 export interface PersonalData {
   age: number;
   gender: Gender;
-  postcode: string;
+  postcode: number;
 }
 
 export enum Gender {
@@ -37,16 +53,22 @@ export enum Gender {
   MALE = "männlich"
 }
 
-export interface Symptoms {
-  cough?: Cough[];
-  fever?: Fever;
-  sniffles?: Sniffles[];
-  pain?: Pain[];
-  diarrhea?: boolean;
-  throat?: Throat[];
-  shortOfBreath?: boolean;
-  exhaustion?: boolean;
+export interface CoughData {
+  coughDry?: boolean;
+  coughProductive?: boolean;
+  coughPainful?: boolean;
 }
+
+export interface PainData {
+  painHead?: boolean;
+  painLimbs?: boolean;
+}
+
+export interface FeverData {
+  feverSuspected?: boolean;
+  feverConfirmed?: boolean;
+}
+
 
 export enum Cough {
   DRY,

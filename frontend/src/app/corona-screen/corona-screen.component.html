@@ -6,24 +6,24 @@
     <div class="spacer"></div>
     <div class="btn-group-vertical">
       <div>
-        <label><input type="radio" id="yes" formControlName="coronaTestedForm" value="yes" (ngModelChange)="this.setCoronaTested(true)" (click)="isYesCollapsed = !isYesCollapsed" [attr.aria-expanded]="!isYesCollapsed" aria-controls="collapseYes"><span> ja</span></label>
+        <label><input type="radio" id="yes" formControlName="coronaTested" value="yes" (click)="isYesCollapsed = !isYesCollapsed" [attr.aria-expanded]="!isYesCollapsed" aria-controls="collapseYes"><span> ja</span></label>
         <div id="collapseYes" [collapse]="isYesCollapsed" [isAnimated]="true">
-          <div class="btn-group-vertical" formGroupName="yesData" style="margin-left: 20px">
-            <label><input type="radio" id="positive" formControlName="positiveTestForm" value="yes" (ngModelChange)="this.setPositiveTest(true)" (click)="isPositiveCollapsed = !isPositiveCollapsed" [attr.aria-expanded]="!isPositiveCollapsed" aria-controls="collapsePositive"><span> positiv</span></label>
+          <div class="btn-group-vertical" style="margin-left: 20px">
+            <label><input type="radio" id="positive" formControlName="positiveTest" value="yes" (click)="isPositiveCollapsed = !isPositiveCollapsed" [attr.aria-expanded]="!isPositiveCollapsed" aria-controls="collapsePositive"><span> positiv</span></label>
             <div id="collapsePositive" [collapse]="isPositiveCollapsed" [isAnimated]="true">
-              <div class="row" formGroupName="positiveData" style="margin-left: 20px">
+              <div class="row" style="margin-left: 20px">
                 <div class="col-xs-12 col-12 col-md-8 form-group">
                   <span>Datum: </span>
-                  <input type="text" placeholder="Datum" class="form-control" bsDatepicker [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD.MM.YYYY'}">
+                  <input type="text" placeholder="Datum" class="form-control" bsDatepicker [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-MM-DD'}" formControlName="testDate">
                 </div>
               </div>
             </div>
-            <label><input type="radio" id="negative" formControlName="positiveTestForm" value="no" (ngModelChange)="this.setPositiveTest(false)"><span> negativ</span></label>
+            <label><input type="radio" id="negative" formControlName="positiveTest" value="no"><span> negativ</span></label>
           </div>
         </div>
       </div>
       <div>
-        <label><input type="radio" id="no" formControlName="coronaTestedForm" value="no" (ngModelChange)="this.setCoronaTested(false)"><span> nein</span></label>
+        <label><input type="radio" id="no" formControlName="coronaTested" value="no"><span> nein</span></label>
       </div>
     </div>
 
