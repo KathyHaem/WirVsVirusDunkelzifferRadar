@@ -3,7 +3,6 @@ from collections import defaultdict
 import datetime as dt
 from arcgis.features import Table
 import psycopg2
-from dotenv import load_dotenv
 import os
 
 
@@ -19,10 +18,11 @@ def get_current_data(setup=False):
     """
     conn = psycopg2.connect(dbname=os.environ.get('DB_NAME'), user=os.environ.get('DB_USER'),
                             password=os.environ.get('DB_PASSWORD'), host=os.environ.get('DB_HOST'),
-                            port=os.environ.get('DB_PORT'))
+                            port=os.environ.get('DB_PORT'), sslcert=os.environ.get('DB_SSL_CERT'),
+                            sslkey=os.environ.get('DB_SSL_KEY'))
     cursor = conn.cursor()
     if setup:
-        _setup_database(cursor)
+        _setup_table(cursor)
         full_data = _request_external_data()
         _store_to_database(cursor, full_data)
     else:
@@ -67,11 +67,12 @@ def _request_external_data(last_date=None):
     return pd.DataFrame(data)
 
 
-def _setup_database(cursor):
+def _setup_table(cursor):
     """
+    Creates a new rki_covid19 table.
 
-    :param cursor:
-    :return:
+    :param cursor: psycopg2.cursor: cursor handling the database operations
+    :return: None
     """
     cursor.execute('CREATE TABLE rki_covid19 ('
                    'ObjectId integer PRIMARY KEY, '
@@ -86,9 +87,10 @@ def _setup_database(cursor):
 
 def _get_last_report_date(cursor):
     """
+    Returns the last report date stored in the database.
 
-    :param cursor:
-    :return:
+    :param cursor: psycopg2.cursor: cursor handling the database operations
+    :return: datetime.date: last report date
     """
     cursor.execute('SELECT MAX(Meldedatum) FROM rki_covid19')
     return cursor.fetchone()[0]
@@ -96,9 +98,10 @@ def _get_last_report_date(cursor):
 
 def _get_current_entries(cursor):
     """
+    Returns the IDs of all entries in the database.
 
-    :param cursor:
-    :return:
+    :param cursor: psycopg2.cursor: cursor handling the database operations
+    :return: list: collection of IDs
     """
     cursor.execute('SELECT ObjectId FROM rki_covid19')
     return [result[0] for result in cursor.fetchall()]
@@ -106,9 +109,10 @@ def _get_current_entries(cursor):
 
 def _get_data_from_database(cursor):
     """
+    Returns the complete rki_covid19 table from the database as data frame.
 
-    :param cursor:
-    :return:
+    :param cursor: psycopg2.cursor: cursor handling the database operations
+    :return: pandas.DataFrame: complete table
     """
     cursor.execute('SELECT * FROM rki_covid19')
     data = cursor.fetchall()
@@ -119,21 +123,22 @@ def _get_data_from_database(cursor):
 
 def _store_to_database(cursor, data):
     """
+    Stores new cases to the database.
 
-    :param cursor:
-    :param data:
-    :return:
+    :param cursor: psycopg2.cursor: cursor handling the database operations
+    :param data: pandas.DataFrame: new cases
+    :return: None
     """
     rows = data.to_dict(orient='records')
     if rows:
         existing_entries = _get_current_entries(cursor)
         for row in rows:
             if row['ObjectId'] not in existing_entries:
-                meldedatum = dt.date.fromtimestamp(row['Meldedatum']//1000)
                 cursor.execute('INSERT INTO rki_covid19 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
                                (row['ObjectId'], row['Bundesland'], row['Landkreis'],
                                 row['Altersgruppe'], row['Geschlecht'], row['AnzahlFall'],
-                                row['AnzahlTodesfall'], meldedatum))
+                                row['AnzahlTodesfall'], row['Meldedatum']))
 
 
-print(get_current_data(setup=False))
+if __name__=='__main__':
+    print(get_current_data(setup=False))
