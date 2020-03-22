@@ -15,6 +15,7 @@
 
 ## Husten
 [Referenz f. Hustenarten](https://www.healthline.com/health/types-of-coughs#paroxysmal-cough)
+
 | Variable | SNOMED Name | SNOMED Code | OMOP Concept ID | relationship |
 | -------- | -------- | -------- |-------- |-------- |
 | Husten | Cough | 49727002 | 254761 | is a "Resporatory function finding" |
@@ -24,6 +25,7 @@
 
 ## Fieber
 Fieber == gemessenes Fieber
+
 | Variable | SNOMED Name | SNOMED Code | OMOP Concept ID | relationship |
 | -------- | -------- | -------- |-------- |-------- |
 | Fieber | Fever | 386661006 | 437663 | is a "Body temperature above reference range" |
