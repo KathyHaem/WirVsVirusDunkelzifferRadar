@@ -1,0 +1,33 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "@wirvsvirus/api-client": [
+        "dist/wirvsvirus/api-client/wirvsvirus-api-client",
+        "dist/wirvsvirus/api-client"
+      ],
+      "@wirvsvirus/api-client-lib": [
+        "dist/wirvsvirus/api-client-lib/wirvsvirus-api-client-lib",
+        "dist/wirvsvirus/api-client-lib"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}

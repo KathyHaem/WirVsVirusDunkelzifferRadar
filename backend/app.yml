@@ -19,10 +19,11 @@ servers:
 tags:
 - name: test
 - name: questionnaire
+- name: visualization
 paths:
   /hello_world:
     get:
-      summary: Gets Hello World Message
+      summary: "Gets Hello World Message"
       operationId: app.hello_world
       tags:
       - test
@@ -38,26 +39,43 @@ paths:
         400:
           description: Invalid status value
           content: {}
-  /send_questionnaire_entry:
+  /questionnaire_entry:
     put:
-      tags:
-      - "questionnaire"
       summary: "Put a new questionnaire entry."
-      operationId: "app.add_questionnaire_entry"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Questionnaire entry that should be added to the database."
+      operationId: app.add_questionnaire_entry
+      tags:
+        - "questionnaire"
+      requestBody:
         required: true
-        schema:
-          $ref: "#/components/schemas/Questionnaire"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Questionnaire"
       responses:
+        400:
+          description: "Invalid ID supplied"
+  /chart/{chart_id}:
+    get:
+      summary: "Request data for a visualization chart."
+      operationId: app.get_chart
+      tags:
+        - "visualization"
+      parameters:
+        - in: path
+          name: chart_id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Chart'
         400:
           description: "Invalid ID supplied"
 components:
@@ -74,6 +92,17 @@ components:
           type: string
       xml:
         name: Category
+    Chart:
+      type: object
+      required:
+        - chart_id
+        - data
+      properties:
+        chart_id:
+          type: integer
+          format: int64
+        data:
+          type: object
     Questionnaire:
       type: object
       required:
@@ -106,7 +135,7 @@ components:
         zip_code:
           type: integer
           format: int64
-        has_cough:
+        cough:
           type: boolean
         cough_dry:
           type: boolean

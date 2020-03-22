@@ -6,7 +6,7 @@ import connexion
 from dotenv import load_dotenv
 from flask_cors import CORS
 
-from backend.routes import hello_world
+from backend.routes import hello_world, add_questionnaire_entry, get_chart
 
 load_dotenv()
 

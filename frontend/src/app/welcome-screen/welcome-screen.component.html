@@ -1,0 +1,20 @@
+<h1>Hallo!</h1>
+<div class="spacer"></div>
+<div>
+  <h3>Warst du schon mal hier?</h3>
+  <form [formGroup]="myForm" class="form-inline">
+    <div class="form-group">
+      <div class="btn-group" btnRadioGroup formControlName="radio">
+        <label btnRadio="Ja" class="btn btn-default"
+               tabindex="0" role="button">Ja</label>
+        <label btnRadio="Nein" class="btn btn-primary"
+               tabindex="0" role="button">Nein</label>
+      </div>
+    </div>
+  </form>
+
+  <div class="spacer"></div>
+
+  <app-progress-bar [progressValue]="20"></app-progress-bar>
+
+</div>

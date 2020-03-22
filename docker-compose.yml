@@ -1,6 +1,7 @@
-version: "3.7"
+version: "3"
 services:
   backend:
+    build: ./backend
     image: dunkelziffer_radar_backend
     ports:
       - 8080:8080
