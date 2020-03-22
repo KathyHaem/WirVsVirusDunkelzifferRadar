@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {TestComponentComponent} from './test-component/test-component.component';
 import {WelcomeScreenComponent} from './welcome-screen/welcome-screen.component';
 import {ProgressBarComponent} from './progress-bar/progress-bar.component';
-import {ApiModule} from "../api";
+import {ApiModule, QuestionnaireService, VisualizationService} from "../api";
 import {HttpClientModule} from "@angular/common/http";
 import {MapComponent} from './map/map.component';
 import {ReactiveFormsModule} from "@angular/forms";
