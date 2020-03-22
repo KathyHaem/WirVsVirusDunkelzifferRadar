@@ -3,7 +3,13 @@ services:
   backend:
     build: ./backend
     image: dunkelziffer_radar_backend
-    environment:
+    env_file:
       - backend/.env
+    environment:
+      - DB_SSL_CERT=/credentials/client-cert.pem
+      - DB_SSL_KEY=/credentials/client-key.pem
+    volumes:
+      - ./backend/credentials/client-cert.pem:/credentials/client-cert.pem
+      - ./backend/credentials/client-key.pem:/credentials/client-key.pem:ro
     ports:
       - 8080:8080
