@@ -39,12 +39,9 @@ def get_chart(chart_name, region, date_start, date_end):
     Returns:
         dict: data for specified chart
     """
-    print(region, date_start, date_end)
+
     if not chart_name:
         return {"error": "request must contain chart_name"}, 400
 
-    if chart_name == "a":
-        return {"chart_name": chart_name, "data": {"x": [1, 2, 3], "y": [2, 4, 8]}}
-
-    if chart_name == "b":
-        return {"chart_name": chart_name, "data": {"x": [1, 2, 3, 4, 5]}}
+    # dataframe = DB.get_data(region, date_start, date_end)
+    # TODO: return data to frontend

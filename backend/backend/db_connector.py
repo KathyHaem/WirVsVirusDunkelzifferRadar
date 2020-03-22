@@ -91,13 +91,13 @@ class DBConnector:
         self.cursor.execute(query, values)
         self.conn.commit()
 
-    def get_data(self):
+    def get_data(self, region, date_start, date_end):
         """
         Returns the full table from the database and converts it to a data frame.
 
         :return: pandas.DataFrame: complete data of the dunkelziffer_radar table.
         """
-        self.cursor.execute("SELECT * FROM dunkelziffer_radar")
+        self.cursor.execute(f"SELECT * FROM dunkelziffer_radar WHERE {date_start} <= entry_date AND {date_end} >= entry_date")
         data = self.cursor.fetchall()
         columns = [desc[0] for desc in self.cursor.description]
         return pd.DataFrame(data, columns=columns)
