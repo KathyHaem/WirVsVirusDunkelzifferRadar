@@ -7,24 +7,20 @@ import { WelcomeScreenComponent } from './welcome-screen/welcome-screen.componen
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { ApiModule } from "../api";
 import {HttpClientModule} from "@angular/common/http";
-import {ReactiveFormsModule} from "@angular/forms";
-import {ButtonsModule} from "ngx-bootstrap";
-import { ProgressbarModule } from "ngx-bootstrap/progressbar";
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestComponentComponent,
     WelcomeScreenComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
     ApiModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    ButtonsModule,
-    ProgressbarModule.forRoot()
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
