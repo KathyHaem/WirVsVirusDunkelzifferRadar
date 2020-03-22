@@ -118,7 +118,7 @@ components:
       - allergy
       - blood_pressure
       - diabetes
-      - other_illnes
+      - other_illness
       properties:
         first_time:
           type: boolean
@@ -177,7 +177,7 @@ components:
           type: boolean
         diabetes:
           type: boolean
-        other_illnes:
+        other_illness:
           type: boolean
 
   securitySchemes:
