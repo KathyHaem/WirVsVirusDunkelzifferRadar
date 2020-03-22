@@ -52,8 +52,8 @@ def get_dunkelziffer_bundesland(df_rki_covid19_aggregated, bundesland):
     )
     a = df_rki_covid19_aggregated.FALL_COUNT[0]
     country_coef = [2.5, 3, 3.5]
-    time_delay = np.arange(8, 13, 1)
-    growth_rate = np.arange(1.15, 1.20, 0.01)
+    time_delay = np.arange(8, 12, 1)
+    growth_rate = np.arange(1.12, 1.19, 0.01)
 
     adam = np.zeros(
         (
