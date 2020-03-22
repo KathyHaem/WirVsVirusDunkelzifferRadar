@@ -3,6 +3,7 @@
 
  * Install [docker](https://docs.docker.com/).
  * Install [docker-compose](https://docs.docker.com/compose/install/).
+ * Make sure the [backend/credentials](backend/credentials) directory exists and contains the files _client-cert.pem_ and _client-key.pem_.
  * Run `docker-compose up`
  
 ## With Pyenv + Poetry
