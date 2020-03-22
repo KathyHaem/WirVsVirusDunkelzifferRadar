@@ -58,17 +58,37 @@ export class VisualizationService {
     /**
      * Request data for a visualization chart.
      * 
-     * @param chartId 
+     * @param chartName 
+     * @param region 
+     * @param dateStart 
+     * @param dateEnd 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public appGetChart(chartId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Chart>>;
-    public appGetChart(chartId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Chart>>>;
-    public appGetChart(chartId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Chart>>>;
-    public appGetChart(chartId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public appGetChart(chartName: string, region?: string, dateStart?: string, dateEnd?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Chart>>;
+    public appGetChart(chartName: string, region?: string, dateStart?: string, dateEnd?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Chart>>>;
+    public appGetChart(chartName: string, region?: string, dateStart?: string, dateEnd?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Chart>>>;
+    public appGetChart(chartName: string, region?: string, dateStart?: string, dateEnd?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (chartId === null || chartId === undefined) {
-            throw new Error('Required parameter chartId was null or undefined when calling appGetChart.');
+        if (chartName === null || chartName === undefined) {
+            throw new Error('Required parameter chartName was null or undefined when calling appGetChart.');
+        }
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (chartName !== undefined && chartName !== null) {
+            queryParameters = queryParameters.set('chart_name', <any>chartName);
+        }
+        if (region !== undefined && region !== null) {
+            queryParameters = queryParameters.set('region', <any>region);
+        }
+        if (dateStart !== undefined && dateStart !== null) {
+            queryParameters = queryParameters.set('date_start', <any>dateStart);
+        }
+        if (dateEnd !== undefined && dateEnd !== null) {
+            queryParameters = queryParameters.set('date_end', <any>dateEnd);
         }
 
         let headers = this.defaultHeaders;
@@ -86,8 +106,9 @@ export class VisualizationService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<Chart>>('get',`${this.basePath}/chart/${encodeURIComponent(String(chartId))}`,
+        return this.httpClient.request<Array<Chart>>('get',`${this.basePath}/chart`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

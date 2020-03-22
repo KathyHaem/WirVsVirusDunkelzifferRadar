@@ -11,32 +11,32 @@
  */
 
 export interface Questionnaire { 
-    first_time: boolean;
+    firstTime: boolean;
     gender: string;
     age: number;
-    zip_code: number;
+    zipCode: number;
     cough: boolean;
-    cough_dry?: boolean;
-    cough_productive?: boolean;
-    cough_painful?: boolean;
+    coughDry?: boolean;
+    coughProductive?: boolean;
+    coughPainful?: boolean;
     fever: boolean;
-    fever_suspected?: boolean;
-    fever_confirmed?: boolean;
-    nose_affected: boolean;
+    feverSuspected?: boolean;
+    feverConfirmed?: boolean;
+    noseAffected: boolean;
     pain: boolean;
-    pain_head?: boolean;
-    pain_limbs?: boolean;
+    painHead?: boolean;
+    painLimbs?: boolean;
     diarrhea: boolean;
     throat: boolean;
     dyspnea: boolean;
     fatigue: boolean;
-    corona_test: boolean;
-    corona_positive?: boolean;
-    corona_date?: string;
-    pre_illness?: string;
+    coronaTest: boolean;
+    coronaPositive?: boolean;
+    coronaDate?: string;
+    preIllness?: string;
     asthma: boolean;
     allergy: boolean;
-    blood_pressure: boolean;
+    bloodPressure: boolean;
     diabetes: boolean;
-    other_illnes: boolean;
+    otherIllness: boolean;
 }

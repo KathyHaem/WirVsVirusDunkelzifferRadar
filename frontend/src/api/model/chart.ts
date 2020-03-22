@@ -11,6 +11,6 @@
  */
 
 export interface Chart { 
-    chartId: number;
+    chartName: string;
     data: any;
 }

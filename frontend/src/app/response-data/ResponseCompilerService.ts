@@ -21,17 +21,17 @@ export class ResponseCompilerService {
   }
 
   public isFirstTime(): boolean {
-    if (this.response.first_time == undefined) return true;
-    else return !this.response.first_time;
+    if (this.response.firstTime == undefined) return true;
+    else return !this.response.firstTime;
   }
 
   addWelcomeScreenData(value: WelcomeScreenResponse): void {
     console.log(value);
-    this.response.first_time = value.seenBefore === "yes";
+    this.response.firstTime = value.seenBefore === "yes";
     if (value.personalData) {
       this.response.age = value.personalData.age || undefined;
       this.response.gender = value.personalData.gender || undefined;
-      this.response.zip_code = value.personalData.postcode || undefined;
+      this.response.zipCode = value.personalData.postcode || undefined;
       return;
     }
   }
@@ -39,16 +39,16 @@ export class ResponseCompilerService {
   addSymptomsScreenData(value: SymptomsScreenResponse): void {
     console.log(value);
     this.response.cough = value.cough || undefined;
-    this.response.cough_dry = value.coughData.coughDry || undefined;
-    this.response.cough_productive = value.coughData.coughProductive || undefined;
-    this.response.cough_painful = value.coughData.coughPainful || undefined;
+    this.response.coughDry = value.coughData.coughDry || undefined;
+    this.response.coughProductive = value.coughData.coughProductive || undefined;
+    this.response.coughPainful = value.coughData.coughPainful || undefined;
     this.response.fever = value.fever || undefined;
-    this.response.fever_suspected = value.feverData.feverSuspected || undefined;
-    this.response.fever_confirmed = value.feverData.feverConfirmed || undefined;
-    this.response.nose_affected = value.nose || undefined;
+    this.response.feverSuspected = value.feverData.feverSuspected || undefined;
+    this.response.feverConfirmed = value.feverData.feverConfirmed || undefined;
+    this.response.noseAffected = value.nose || undefined;
     this.response.pain = value.pain || undefined;
-    this.response.pain_head = value.painData.painHead || undefined;
-    this.response.pain_limbs = value.painData.painLimbs || undefined;
+    this.response.painHead = value.painData.painHead || undefined;
+    this.response.painLimbs = value.painData.painLimbs || undefined;
     this.response.diarrhea = value.diarrhea || undefined;
     this.response.throat = value.throat || undefined;
     this.response.dyspnea = value.dyspnea || undefined;
@@ -59,9 +59,9 @@ export class ResponseCompilerService {
 
   addCoronaScreenData(value: CoronaScreenResponse): void {
     console.log(value);
-    this.response.corona_test = value.coronaTested || undefined;
-    this.response.corona_positive = value.positiveTest || undefined;
-    this.response.corona_date = value.testDate || undefined;
+    this.response.coronaTest = value.coronaTested || undefined;
+    this.response.coronaPositive = value.positiveTest || undefined;
+    this.response.coronaDate = value.testDate || undefined;
     return;
   }
 
