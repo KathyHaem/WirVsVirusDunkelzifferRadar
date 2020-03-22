@@ -12,7 +12,7 @@ import sys
 #
 # Generates n questionnaires as JSON-files in the folder "generated"
 #
-def generate():
+def generate_snomed():
     questionnaire = {}
 
     # Allgemeines
@@ -60,10 +60,78 @@ def generate():
 
     return questionnaire
 
-def random_gender():
+#
+# Generates n questionnaires as JSON-files in the folder "generated"
+#
+def generate():
+    questionnaire = {}
+
+    # Allgemeines
+    questionnaire['first_time'] = random_boolean()
+    # questionnaire['406543005'] = date.today().isoformat()  # 406543005 == Date of Visit
+    # questionnaire['118522005'] = random_name()  # 118522005 == Identifier
+    questionnaire['gender'] = random_gender(False)  # 263495000 == Gender
+    questionnaire['age'] = random_age()  # 397669002 == Age
+    questionnaire['zip_code'] = int(random_plz())  # 184102003 == Patient postal code
+
+    # Physische Gesundheit
+    ## Husten
+    questionnaire['cough'] = random_boolean()  # 49727002 == Cough
+    questionnaire['cough_dry'] = random_subquestion_boolean(questionnaire['cough'])  # 11833005 == Dry cough
+    questionnaire['cough_productive'] = random_subquestion_boolean(
+        questionnaire['cough'])  # 28743005 == Productive cough (schleimiger Husten)
+    questionnaire['cough_painful'] = random_subquestion_boolean(questionnaire['cough'])  # 247410004 == Painful cough
+
+    ## Fieber
+    questionnaire['fever'] = random_boolean()  # 386661006 == Fever
+    questionnaire['fever_suspected'] = random_subquestion_boolean(questionnaire['fever'])  # 103001002 == Feeling feverish
+    questionnaire['fever_confirmed'] = random_subquestion_boolean(
+        questionnaire['fever'])  # 103001002 == Fever confirmed
+
+    ## Schnupfen
+    questionnaire['nose_affected'] = random_boolean()  # 82272006 == Common cold
+
+    ## Schmerzen
+    questionnaire['pain'] = random_boolean()  # 22253000 = Pain
+    questionnaire['pain_head'] = random_subquestion_boolean(questionnaire['pain'])  # 25064002 == Headache
+    questionnaire['pain_limbs'] = random_subquestion_boolean(questionnaire['pain'])  # 102482005 == Growing pains
+
+    ## Verdauungsprobleme
+    questionnaire['diarrhea'] = random_boolean()  # 386617003 == Digestive system finding (Vardauungsprobleme)
+
+    ## Halsschmerzen
+    questionnaire['throat'] = random_boolean()  # 267102003 == Sore Throat Symptom
+
+    ## Kurzatmigkeit
+    questionnaire['dyspnea'] = random_boolean()  # 267036007 == Dyspnea (Kurzatmigkeit)
+
+    ## Erschöpfung
+    questionnaire['fatigue'] = random_boolean()  # 84229001 == Fatigue (Erschöpfung)
+
+    # Corona Tests
+    questionnaire['corona_test'] = random_boolean()  # 121973000 == Measurement of coronavirus antibody
+    questionnaire['corona_positive'] = random_subquestion_boolean(
+        questionnaire['corona_test'])  # 186747009 == Coronavirus infection
+    if questionnaire['corona_positive']:
+        questionnaire['corona_date'] = date.today().isoformat() # 432213005 == Date of diagnosis
+
+    # Other illnesses
+    questionnaire['asthma'] = random_boolean()
+    questionnaire['allergy'] = random_boolean()
+    questionnaire['blood_pressure'] = random_boolean()
+    questionnaire['diabetes'] = random_boolean()
+    questionnaire['other_illness'] = random_boolean()
+
+    return questionnaire
+
+def random_gender(snomed=True):
     gender = ['248152002',  # 248152002 == female
-            '248153007',    # 248153007 == male
-            '772004004']    # 772004004 == non-binary gender
+              '248153007',  # 248153007 == male
+              '772004004'] if snomed else [# 772004004 == non-binary gender
+        "female",
+        "male",
+        "diverse"
+    ]
     return random.choice(gender)
 
 def random_name():
