@@ -37,10 +37,6 @@ export class CoronaScreenComponent implements OnInit {
     });
   }
 
-  public nextScreen(): void {
-
-  }
-
   onSubmit(): void {
     // todo validation?
     this.responseCompilerService.addCoronaScreenData(this.coronaScreenForm.value);

@@ -10,12 +10,13 @@ import {FormControl, FormGroup} from "@angular/forms";
 export class ExistingConditionsScreenComponent implements OnInit {
 
   @Output() complete: EventEmitter<boolean> = new EventEmitter<boolean>();
-  private conditionsForm: FormGroup;
+  public conditionsForm: FormGroup;
 
   constructor(private responseCompilerService: ResponseCompilerService) {
   }
 
   ngOnInit(): void {
+    this.conditionsForm = this.createFormGroup();
   }
 
   createFormGroup(): FormGroup {

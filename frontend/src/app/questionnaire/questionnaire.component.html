@@ -2,4 +2,8 @@
                     (complete)="this.completedWelcomeScreen($event)"></app-welcome-screen>
 <app-symptoms-screen *ngIf="this.symptomsScreenActive"
                      (complete)="this.completedSymptomsScreen($event)"></app-symptoms-screen>
-<app-corona-screen *ngIf="this.coronaScreenActive"></app-corona-screen>
+<app-corona-screen *ngIf="this.coronaScreenActive"
+                   (complete)="this.completedCoronaTestScreen($event)"></app-corona-screen>
+
+<app-existing-conditions-screen *ngIf="this.existingConditionsScreenActive"
+                                (complete)="this.completeConditionsScreen($event)"></app-existing-conditions-screen>

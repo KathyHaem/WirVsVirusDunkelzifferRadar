@@ -51,4 +51,8 @@ export class QuestionnaireComponent implements OnInit {
     }
     this.goingOutsideScreenActive = true;
   }
+
+  completeConditionsScreen($event: boolean) {
+
+  }
 }

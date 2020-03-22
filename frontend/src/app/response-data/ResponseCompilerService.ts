@@ -41,6 +41,7 @@ export class ResponseCompilerService {
   }
 
   addCoronaScreenData(value: CoronaScreenResponse): void {
+    console.log(value);
   }
 
   addConditionsScreenData(value: ConditionsScreenResponse): void {

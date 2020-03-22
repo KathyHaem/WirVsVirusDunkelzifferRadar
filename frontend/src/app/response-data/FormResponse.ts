@@ -18,11 +18,16 @@ export interface CoronaScreenResponse {
   testStatus?: TestStatus;
 }
 
-interface ExistingConditions {
-}
-
 export interface ConditionsScreenResponse {
   existingConditions?: ExistingConditions;
+}
+
+export interface ExistingConditions {
+  asthma?: boolean;
+  allergies?: boolean;
+  hypertension?: boolean;
+  diabetes?: boolean;
+  other?: boolean;
 }
 
 export interface PersonalData {
