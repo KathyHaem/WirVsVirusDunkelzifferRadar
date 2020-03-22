@@ -3,5 +3,7 @@ services:
   backend:
     build: ./backend
     image: dunkelziffer_radar_backend
+    environment:
+      - backend/.env
     ports:
       - 8080:8080
