@@ -1,5 +1,12 @@
-<h1>Vielen Dank!</h1>
-<div class="spacer"></div>
-<p>Deine Teilnahme hilft uns, den Überblick zu behalten.</p>
-<div class="spacer"></div>
-<app-progress-bar [type]="'success'" [progressValue]="100"></app-progress-bar>
+<form action="" [formGroup]="submitForm" (ngSubmit)="this.onSubmit()">
+    <h1>Vielen Dank!</h1>
+    <div class="spacer"></div>
+    <p>Deine Teilnahme hilft uns, den Überblick zu behalten.</p>
+    <div class="spacer"></div>
+    <app-progress-bar [type]="'success'" [progressValue]="100"></app-progress-bar>
+    <div class="spacer"></div>
+    <div class="center-align">
+        <button type="submit" class="btn btn-default">Aktuelle Fallzahlen</button>
+    </div>
+  
+  </form>

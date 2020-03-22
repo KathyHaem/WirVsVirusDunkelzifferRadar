@@ -36,6 +36,12 @@ h6 {
   padding: 0;
 }
 
+.center-align {
+  text-align: center;
+  width: 100%;
+  padding: 0;
+}
+
 .toolbar {
   padding: 1em;
   position: absolute;

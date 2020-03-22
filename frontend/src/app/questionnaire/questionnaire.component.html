@@ -8,4 +8,5 @@
                                 (complete)="this.completeConditionsScreen($event)"></app-existing-conditions-screen>
 <app-submit-screen *ngIf="this.submitScreenActive"
                    (complete)="this.submittedData($event)"></app-submit-screen>
-<app-thank-you-screen *ngIf="this.thankYouScreenActive"></app-thank-you-screen>
+<app-thank-you-screen *ngIf="this.thankYouScreenActive" (complete)="this.completeThankYou($event)"></app-thank-you-screen>
+<app-map *ngIf="this.mapScreenActive"></app-map>

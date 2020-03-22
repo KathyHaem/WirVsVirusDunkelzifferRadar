@@ -6,14 +6,14 @@ import * as Highcharts from 'highcharts';
 import MapModule from 'highcharts/modules/map';
 
 import Drilldown from 'highcharts/modules/drilldown';
-Drilldown(Highcharts);
 
+Drilldown(Highcharts);
 
 const germany = require('src/assets/germany2.geo.json');
 const landDaten = require('src/assets/Daten.json');
+const fallzahlen = require('src/assets/Fallzahlen.json')
 let map_chart: Highcharts.Chart;
-let graph1_chart: Highcharts.Chart;
-let graph2_chart: Highcharts.Chart;
+let graph_chart: Highcharts.Chart;
 let bar_chart: Highcharts.Chart;
 let pie_chart: Highcharts.Chart;
 
@@ -31,22 +31,24 @@ export class MapComponent implements OnInit {
   drilldown_callback(e) {
     let id = e.point['id'];
     if (id.length == 2) {
-      let title = landDaten[id]['name']
+      let title = landDaten[id]['name'];
       map_chart.setTitle({ text: title });
       drillStack.push([id, title]);
       let drilldownData = [];
       for (let i in landDaten[id]['Kreise']) {
         let kreis = landDaten[id]['Kreise'][i];
         let kreis_id = kreis['id']
-        drilldownData.push({ 'id': kreis_id, 'value': Math.floor(Math.random() * 100), 'drilldown': kreis_id, 'name': kreis['name'] });
+        drilldownData.push({ 'id': kreis_id, 'value': 0, 'drilldown': kreis_id });
       }
       map_chart.addSeriesAsDrilldown(e.point, {
         id: id,
+        name: 'Anzahl Infizierte',
         type: 'map',
         mapData: require(`src/assets/${id}.geo.json`),
         data: drilldownData,
         joinBy: 'id'
       });
+
     } else {
       let kreise = landDaten[id.substr(0, 2)]['Kreise']
       for (let i in kreise) {
@@ -59,16 +61,13 @@ export class MapComponent implements OnInit {
       }
       map_chart.addSeriesAsDrilldown(e.point, {
         id: id,
+        name: 'Anzahl Infizierte',
         type: 'map',
         mapData: require(`src/assets/kreise/${id}.geo.json`),
-        data: [{ 'id': id, 'value': Math.floor(Math.random() * 100), 'name': id }],
+        data: [{ 'id': id, 'value': 0}],
         joinBy: 'id'
       });
     }
-    graph1_chart.series[0].update({
-      data: [1, 1.0, 1.1, 1.1, 11.1]
-    } as Highcharts.SeriesOptionsType, true);
-    graph2_chart.series = []
   }
 
   drillup_callback(e) {
@@ -84,8 +83,7 @@ export class MapComponent implements OnInit {
       events: {
         drilldown: this.drilldown_callback,
         drillup: this.drillup_callback
-      },
-      height: 600
+      }
     },
     title: {
       text: 'Deutschland'
@@ -108,7 +106,7 @@ export class MapComponent implements OnInit {
 
   chart: Highcharts.Options = {
     title: {
-      text: 'Line Graph'
+      text: 'Sample Line Graph'
     },
     xAxis: {
       title: {
@@ -117,30 +115,11 @@ export class MapComponent implements OnInit {
     },
     yAxis: {
       title: {
-        text: "Infected"
+        text: "Sample Data"
       }
     },
     series: [{
       data: [1, 2.5, 5.5, 10.0, 15.0]
-    }]
-  } as Highcharts.Options;
-
-  chart2: Highcharts.Options = {
-    title: {
-      text: 'Line Graph 2'
-    },
-    xAxis: {
-      title: {
-        text: "Time"
-      }
-    },
-    yAxis: {
-      title: {
-        text: "Cumul. Infected"
-      }
-    },
-    series: [{
-      data: [3.5, 10.0, 20.0, 35.0, 50.0]
     }]
   } as Highcharts.Options;
 
@@ -149,31 +128,12 @@ export class MapComponent implements OnInit {
       type: 'pie'
     },
     title: {
-      text: "Pie Chart"
+      text: "Fallzahlen der Bundesländer"
     },
-    series: [{
-      name: 'Pies',
-      colorByPoint: true,
-      type: 'pie',
-      data: [
-        {
-          name: 'Pie 1',
-          y: 50.0
-        },
-        {
-          name: 'Pie 2',
-          y: 25.0
-        },
-        {
-          name: 'Pie 3',
-          y: 13.0
-        },
-        {
-          name: 'Pie 4',
-          y: 12.0
-        }]
-    }
-    ]
+    tooltip : {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    series: []
   };
 
   bar: Highcharts.Options = {
@@ -181,16 +141,17 @@ export class MapComponent implements OnInit {
       type: 'column'
     },
     title: {
-      text: "Column Chart"
+      text: "Fallzahlen pro Bundesland"
     },
-    xAxis: {
-      categories: ['01.03', '02.03', '03.03', '04.03', '05.03', '06.03', '07.03', '08.03', '09.03', '10.03', '11.03', '12.03', '13.03', '14.03',]
+    xAxis: {},
+    plotOptions: {
+      column: {
+          pointPadding: 0.2,
+          borderWidth: 0,
+          pointWidth: 20.0
+      }
     },
-    series: [{
-      name: 'Deaths',
-      type: 'column',
-      data: [5, 10, 15, 30, 60, 120, 240, 300, 330, 100, 150, 400, 450, 450]
-    }]
+    series: []
   }
 
   constructor() {
@@ -201,10 +162,11 @@ export class MapComponent implements OnInit {
       let s = i.toString();
       if (i < 10)
         s = "0" + s;
-      data.push({ name: s, 'value': i, 'drilldown': s, 'id': s });
+      let value = fallzahlen[s]['infizierte']
+      data.push({'value': value, 'drilldown': s, 'id': s });
     }
     this.chartMap.series.push({
-      name: 'Random data',
+      name: 'Anzahl Infizierte',
       states: {
         hover: {  
           color: '#BADA55',
@@ -217,12 +179,55 @@ export class MapComponent implements OnInit {
       joinBy: 'id'
     });
     this.chartMap.drilldown.series = drilldown;
+
+
+    let pieData = [];
+    let total = fallzahlen['00']['infizierte'];
+
+    for (let i = 1; i <= 16; i++) {
+      let s = i.toString();
+      if (i < 10)
+        s = "0" + s;
+      let value = fallzahlen[s]['infizierte']/total * 100;
+      pieData.push({name: landDaten[s]['name'], y: value});
+    }
+    this.pie.series.push({
+      name: 'Anzahl Infizierte',
+      colorByPoint: true,
+      type: 'pie',
+      data: pieData});
+
+      let barData1 = [];
+      let barData2 = [];
+      let barData3 = [];
+      let barCat = [];
+      for (let i = 1; i <= 16; i++) {
+        let s = i.toString();
+        if (i < 10)
+          s = "0" + s;
+        barData1.push(fallzahlen[s]['infizierte']);
+        barData2.push(fallzahlen[s]['tode']);
+        barData3.push(fallzahlen[s]['genesen']);
+        barCat.push(landDaten[s]['name']);
+      }
+      this.bar.xAxis = { categories: barCat }
+      this.bar.series.push({
+        name: 'Anzahl Infizierte',
+        type: 'column',
+        data: barData1});
+      this.bar.series.push({
+        name: 'Anzahl Tode',
+        type: 'column',
+        data: barData2});
+      this.bar.series.push({
+        name: 'Anzahl Genesen',
+        type: 'column',
+        data: barData3});
   }
 
   ngOnInit(): void {
     map_chart = Highcharts.mapChart('map-container', this.chartMap);
-    graph1_chart = Highcharts.chart('graph1-container', this.chart);
-    graph2_chart = Highcharts.chart('graph2-container', this.chart);
+    graph_chart = Highcharts.chart('graph-container', this.chart);
     pie_chart = Highcharts.chart('pie-container', this.pie);
     bar_chart = Highcharts.chart('bar-container', this.bar)
   }

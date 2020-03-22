@@ -13,6 +13,7 @@ export class QuestionnaireComponent implements OnInit {
   public existingConditionsScreenActive: boolean;
   public submitScreenActive: boolean;
   public thankYouScreenActive: boolean;
+  public mapScreenActive: boolean;
 
   constructor(private responseCompilerService: ResponseCompilerService) {
   }
@@ -23,6 +24,7 @@ export class QuestionnaireComponent implements OnInit {
     this.coronaScreenActive = false;
     this.existingConditionsScreenActive = false;
     this.submitScreenActive = false;
+    this.mapScreenActive = false;
   }
 
   completedWelcomeScreen(event: boolean) {
@@ -67,5 +69,13 @@ export class QuestionnaireComponent implements OnInit {
     }
     this.submitScreenActive = false;
     this.thankYouScreenActive = true;
+  }
+
+  completeThankYou(event:boolean) {
+    if (event == false) {
+      return;
+    }
+    this.thankYouScreenActive = false;
+    this.mapScreenActive = true;
   }
 }
