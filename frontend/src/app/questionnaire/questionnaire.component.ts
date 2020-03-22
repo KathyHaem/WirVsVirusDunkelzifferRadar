@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ResponseCompilerService} from "../response-data/ResponseCompilerService";
 
 @Component({
   selector: 'app-questionnaire',
@@ -9,22 +10,45 @@ export class QuestionnaireComponent implements OnInit {
   public welcomeScreenActive: boolean;
   public symptomsScreenActive: boolean;
   public coronaScreenActive: boolean;
+  public existingConditionsScreenActive: boolean;
+  public goingOutsideScreenActive: boolean;
 
-  constructor() { }
+  constructor(private responseCompilerService: ResponseCompilerService) {
+  }
 
   ngOnInit(): void {
     this.welcomeScreenActive = true;
     this.symptomsScreenActive = false;
     this.coronaScreenActive = false;
+    this.existingConditionsScreenActive = false;
+    this.goingOutsideScreenActive = false;
   }
 
-  goToSymptomsScreen(event: boolean) {
+  completedWelcomeScreen(event: boolean) {
+    if (event == false) {
+      return;
+    }
     this.welcomeScreenActive = false;
     this.symptomsScreenActive = true;
   }
 
-  goToCoronaScreen(event: boolean) {
+  completedSymptomsScreen(event: boolean) {
+    if (event == false) {
+      return;
+    }
     this.symptomsScreenActive = false;
     this.coronaScreenActive = true;
+  }
+
+  completedCoronaTestScreen(event: boolean) {
+    if (event == false) {
+      return;
+    }
+    this.coronaScreenActive = false;
+    if (this.responseCompilerService.isFirstTime()) {
+      this.existingConditionsScreenActive = true;
+      return;
+    }
+    this.goingOutsideScreenActive = true;
   }
 }
