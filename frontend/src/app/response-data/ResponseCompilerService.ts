@@ -7,4 +7,7 @@ export class ResponseCompilerService {
 
   constructor() { }
 
+  addWelcomeScreenData(value: any) {
+
+  }
 }
