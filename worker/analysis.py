@@ -1,27 +1,150 @@
-#from connection import get_database_table as get_table
-#from connection import pd
-from external_data import pd
-from external_data import get_current_data
+import os
+import numpy as np
+import pandas as pd
+from dotenv import load_dotenv
+from datetime import datetime, timedelta
+from scipy.optimize import curve_fit
+from scipy.optimize import fsolve
+from landkreisAggregate import getAggregatedTable
 
-df_rki_covid19 = get_current_data()
-#df_rki_covid19.to_csv('data.csv', index=False)
+load_dotenv(".env")
 
-#df_rki_covid19 = pd.read_csv("data.csv")
+from .db_connector import DBConnector
 
-"""
-This implements the aggreagtion on landkreis niveau with respect to the
-meldedatum
-"""
-print(df_rki_covid19.head())
-df_rki_covid19 = (
-    df_rki_covid19.drop("ObjectId", axis=1)
-    .groupby(["Bundesland", "Landkreis", "Meldedatum"])
-    .sum()
+DB = DBConnector(db_name=os.environ.get('DB_NAME'), db_user=os.environ.get('DB_USER'),
+                 db_password=os.environ.get('DB_PASSWORD'), db_host=os.environ.get('DB_HOST'),
+                 db_port=os.environ.get('DB_PORT'), db_ssl_cert=os.environ.get('DB_SSL_CERT'),
+                 db_ssl_key=os.environ.get('DB_SSL_KEY'))
+
+# Model definition
+def logistic_model(x, a, b, c):
+    return c / (1 + np.exp(-(x - b) / a))
+
+
+def exponential_model(x, a, b, c):
+    # return a*np.exp(b*(x-c))
+    return a * b ** (x + c)
+
+
+def get_dunkelziffer_bundesland(df_rki_covid19_aggregated, bundesland):
+    first_day = df_rki_covid19_aggregated.MELDEDATUM.min()
+    
+    df_rki_covid19_aggregated = (
+        df_rki_covid19_aggregated.groupby(["BUNDESLAND", "tage"])
+        .sum()
+        .loc[bundesland]
+        .cumsum()
+        .resample("1d")
+        .ffill()
+    )
+
+    df_rki_covid19_aggregated = df_rki_covid19_aggregated.reset_index()
+    
+    backup_date = first_day + df_rki_covid19_aggregated.tage
+    
+    df_rki_covid19_aggregated.tage = (
+        df_rki_covid19_aggregated.tage / np.timedelta64(1, "D")
+    )
+
+    # Creating "predictions"
+    x = np.linspace(
+        0, len(df_rki_covid19_aggregated.tage), len(df_rki_covid19_aggregated.tage)
+    )
+    a = df_rki_covid19_aggregated.FALL_COUNT[0]
+    country_coef = [2.5, 3, 3.5]
+    time_delay = np.arange(8, 12, 1)
+    growth_rate = np.arange(1.12, 1.19, 0.01)
+
+    adam = np.zeros(
+        (
+            len(country_coef),
+            len(time_delay),
+            len(growth_rate),
+            len(df_rki_covid19_aggregated.tage),
+        )
+    )
+
+    for c, coef in enumerate(country_coef):
+        for t, days in enumerate(time_delay):
+            for b, rate in enumerate(growth_rate):
+                adam[c, t, b, :] = exponential_model(x, coef * a, rate, days)
+    
+    bob = np.mean(adam, axis=(0, 1, 2))
+    return list(zip(backup_date, bob))
+
+
+def get_dunkelziffer_landkreis(df_rki_covid19_aggregated, landkreis):
+    first_day = df_rki_covid19_aggregated.MELDEDATUM.min()
+    
+    df_rki_covid19_aggregated = (
+        df_rki_covid19_aggregated.groupby(["LANDKREIS", "tage"])
+        .sum()
+        .loc[landkreis]
+        .cumsum()
+        .resample("1d")
+        .ffill()
+    )
+
+    df_rki_covid19_aggregated = df_rki_covid19_aggregated.reset_index()
+    
+    backup_date = first_day + df_rki_covid19_aggregated.tage
+    
+    df_rki_covid19_aggregated.tage = (
+        df_rki_covid19_aggregated.tage / np.timedelta64(1, "D")
+    )
+
+    # Creating "predictions"
+    x = np.linspace(
+        0, len(df_rki_covid19_aggregated.tage), len(df_rki_covid19_aggregated.tage)
+    )
+    a = df_rki_covid19_aggregated.FALL_COUNT[0]
+    country_coef = [2.5, 3, 3.5]
+    time_delay = np.arange(8, 13, 1)
+    growth_rate = np.arange(1.15, 1.20, 0.01)
+
+    adam = np.zeros(
+        (
+            len(country_coef),
+            len(time_delay),
+            len(growth_rate),
+            len(df_rki_covid19_aggregated.tage),
+        )
+    )
+
+    for c, coef in enumerate(country_coef):
+        for t, days in enumerate(time_delay):
+            for b, rate in enumerate(growth_rate):
+                adam[c, t, b, :] = exponential_model(x, coef * a, rate, days)
+    
+    bob = np.mean(adam, axis=(0, 1, 2))
+    return list(zip(backup_date, bob))
+
+# Loading Dataframe
+df_rki_covid19_aggregated = getAggregatedTable()
+df_rki_covid19_aggregated=df_rki_covid19_aggregated[df_rki_covid19_aggregated.BUNDESLAND!='-nicht erhoben-']
+df_rki_covid19_aggregated=df_rki_covid19_aggregated[df_rki_covid19_aggregated.LANDKREIS !='-nicht erhoben-']
+
+# Dataframe manipulations
+df_rki_covid19_aggregated.MELDEDATUM = pd.to_datetime(
+    df_rki_covid19_aggregated.MELDEDATUM
 )
-df_rki_covid19.reset_index(inplace=True)
-print(
-    df_rki_covid19[
-        (df_rki_covid19.Bundesland == "Hessen")
-        & (df_rki_covid19.Landkreis == "SK Offenbach")
-    ]
+
+df_rki_covid19_aggregated["tage"] = (
+    df_rki_covid19_aggregated.MELDEDATUM
+    - df_rki_covid19_aggregated.MELDEDATUM.min()
 )
+
+for land in np.unique(df_rki_covid19_aggregated.BUNDESLAND.values):
+    dictionary = get_dunkelziffer_bundesland(df_rki_covid19_aggregated, land)
+    # print(dictionary)
+    #to do
+    #function to push to datenbank
+    DB.insert_row(dictionary)
+    
+for kreis in np.unique(df_rki_covid19_aggregated.LANDKREIS.values):
+    dictionary = get_dunkelziffer_landkreis(df_rki_covid19_aggregated, kreis)
+    # print(dictionary)
+    #to do
+    #function to push to datenbank
+    DB.insert_row(dictionary)
+    

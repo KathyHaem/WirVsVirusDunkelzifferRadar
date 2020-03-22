@@ -4,7 +4,6 @@ import datetime as dt
 from arcgis.features import Table
 import psycopg2
 import os
-from dotenv import load_dotenv
 
 
 def get_current_data(setup=False):
@@ -17,7 +16,6 @@ def get_current_data(setup=False):
     :param setup: bool: Whether to create a new database table or use an existing one.
     :return: pandas.DataFrame: Full updated table
     """
-    load_dotenv()
     conn = psycopg2.connect(dbname=os.environ.get('DB_NAME'), user=os.environ.get('DB_USER'),
                             password=os.environ.get('DB_PASSWORD'), host=os.environ.get('DB_HOST'),
                             port=os.environ.get('DB_PORT'), sslcert=os.environ.get('DB_SSL_CERT'),
@@ -108,6 +106,13 @@ def _get_current_entries(cursor):
     cursor.execute('SELECT ObjectId FROM rki_covid19')
     return [result[0] for result in cursor.fetchall()]
 
+def _get_current_entries_aggregated(cursor):
+    cursor.execute("""
+                    SELECT BUNDESLAND, LANDKREIS, MELDEDATUM
+                    FROM aggregated_rki_covid_19
+                    """
+    )
+    return [result[0] for result in cursor.fetchall()]
 
 def _get_data_from_database(cursor):
     """
@@ -122,6 +127,12 @@ def _get_data_from_database(cursor):
                'AnzahlTodesfall', 'Meldedatum']
     return pd.DataFrame(data, columns=columns)
 
+def _get_data_from_database_aggregated(cursor):
+    cursor.execute(' SELECT * FROM aggregated_rki_covid_19')
+    data = cursor.fetchall()
+    columns = ['BUNDESLAND', 'LANDKREIS', 'MELDEDATUM', 'FALL_COUNT',
+        'TODESFALL_COUNT']
+    return pd.DataFrame(data, columns=columns)
 
 def _store_to_database(cursor, data):
     """
@@ -141,6 +152,19 @@ def _store_to_database(cursor, data):
                                 row['Altersgruppe'], row['Geschlecht'], row['AnzahlFall'],
                                 row['AnzahlTodesfall'], row['Meldedatum']))
 
+
+def _store_to_database_aggregated(df, cursor):
+    cursor = cursor
+
+    rows = df.to_dict(orient='records')
+
+    if rows:
+        existing_entries = _get_current_entries_aggregated(cursor)
+        for row in rows:
+            if [row['Bundesland'], row['Landkreis'], row['Meldedatum']] not in existing_entries:
+                cursor.execute('INSERT INTO aggregated_rki_covid_19 VALUES (%s, %s, %s, %s, %s)',
+                               (row['Bundesland'], row['Landkreis'], row['Meldedatum'],
+                                row['AnzahlFall'], row['AnzahlTodesfall']))
 
 if __name__=='__main__':
     print(get_current_data(setup=False))
