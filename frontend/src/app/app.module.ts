@@ -9,7 +9,7 @@ import {ApiModule} from "../api";
 import {HttpClientModule} from "@angular/common/http";
 import {MapComponent} from './map/map.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {ButtonsModule, BsDropdownModule} from "ngx-bootstrap";
+import {ButtonsModule, BsDropdownModule, BsDropdownDirective} from "ngx-bootstrap";
 import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 
 @NgModule({
@@ -23,7 +23,11 @@ import {ProgressbarModule} from "ngx-bootstrap/progressbar";
   imports: [
     BrowserModule,
     ApiModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    ButtonsModule,
+    ProgressbarModule.forRoot(),
+    BsDropdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
