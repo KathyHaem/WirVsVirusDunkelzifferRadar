@@ -1,0 +1,34 @@
+<div class="spacer"></div>
+<div>
+
+  <form action="" [formGroup]="conditionsForm" (ngSubmit)="this.onSubmit()">
+    <h3>Hast du Vorerkrankungen?</h3>
+    <div class="spacer"></div>
+    <div class="btn-group-vertical">
+      <label><input type="radio" id="asthma" formControlName="asthma"><span> Asthma</span></label>
+      <label><input type="radio" id="allergies" formControlName="allergies"><span> Heuschnupfen</span></label>
+      <label><input type="radio" id="hypertension" formControlName="hypertension"><span> Bluthochdruck</span></label>
+      <label><input type="radio" id="diabetes" formControlName="diabetes"><span> Diabetes</span></label>
+      <label><input type="radio" id="other" formControlName="other"><span> Andere</span></label>
+    </div>
+    <br>
+
+    <div class="spacer"></div>
+    <div class="right-align">
+      <button type="submit"
+              [disabled]="conditionsForm.dirty"
+              class="btn btn-default">
+        Keine
+      </button>
+      <button type="submit"
+              [disabled]="conditionsForm.pristine"
+              class="btn btn-default" style="margin-left: 8px">
+        Weiter
+      </button>
+    </div>
+
+  </form>
+
+  <app-progress-bar [progressValue]="80"></app-progress-bar>
+
+</div>

@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
 import {Gender} from "../response-data/FormResponse"
+import {ResponseCompilerService} from "../response-data/ResponseCompilerService";
 
 @Component({
   selector: 'app-welcome-screen',
@@ -9,11 +10,14 @@ import {Gender} from "../response-data/FormResponse"
 })
 export class WelcomeScreenComponent implements OnInit {
 
+  @Output() complete: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   public genders = Object.values(Gender);
 
+  public seenBefore: boolean = true;
   public welcomeScreenForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private responseCompilerService: ResponseCompilerService) {
   }
 
   ngOnInit(): void {
@@ -25,17 +29,19 @@ export class WelcomeScreenComponent implements OnInit {
       seenBefore: new FormControl(),
       personalData: new FormGroup({
         age: new FormControl(),
-        gender: new FormControl(),
+        gender: new FormControl(undefined),
         postcode: new FormControl()
       })
     });
   }
 
-  public nextScreen(): void {
-
+  onSubmit(): void {
+    // todo validation?
+    this.responseCompilerService.addWelcomeScreenData(this.welcomeScreenForm.value);
+    this.complete.emit(true);
   }
 
-  onSubmit() {
-
+  setSeenBefore(seenBefore: boolean) {
+    this.seenBefore = seenBefore;
   }
 }
