@@ -46,9 +46,9 @@ def get_chart(chart_id):
     """
 
     Args:
-        body:
+        chart_id (int): id of requested chart
 
     Returns:
-
+        dict: data for specified chart
     """
     return {"chart_id": chart_id, "x": [1, 2, 3], "y": [2, 4, 8]}
