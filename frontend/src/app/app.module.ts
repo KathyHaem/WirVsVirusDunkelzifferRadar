@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {TestComponentComponent} from './test-component/test-component.component';
 import {WelcomeScreenComponent} from './welcome-screen/welcome-screen.component';
 import {SymptomsScreenComponent} from './symptoms-screen/symptoms-screen.component';
+import {CoronaScreenComponent} from './corona-screen/corona-screen.component';
 import {ProgressBarComponent} from './progress-bar/progress-bar.component';
 import {ApiModule, QuestionnaireService, VisualizationService} from "../api";
 import {HttpClientModule} from "@angular/common/http";
@@ -15,12 +16,15 @@ import {ButtonsModule, BsDropdownModule, BsDropdownDirective} from "ngx-bootstra
 import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestComponentComponent,
     WelcomeScreenComponent,
+    SymptomsScreenComponent,
+    CoronaScreenComponent,
     ProgressBarComponent,
     MapComponent,
     QuestionnaireComponent,
@@ -37,6 +41,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     BsDropdownModule,
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
+    BsDatepickerModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
