@@ -10,19 +10,6 @@ DB = DBConnector(db_name=os.environ.get('DB_NAME'), db_user=os.environ.get('DB_U
                  db_ssl_key=os.environ.get('DB_SSL_KEY'))
 
 
-def hello_world():
-    """
-    Returns mock data.
-
-    Returns:
-        dict: mock data.
-    """
-    return {
-        "test_id": 1,
-        "message": "hello world"
-    }
-
-
 def add_questionnaire_entry(body):
     """
     Add Questionnaire entry to database.
@@ -46,7 +33,7 @@ def add_questionnaire_entry(body):
     return {}, 200
 
 
-def get_chart(chart_id):
+def get_chart(chart_name, region, date_start, date_end):
     """
 
     Args:
@@ -55,4 +42,12 @@ def get_chart(chart_id):
     Returns:
         dict: data for specified chart
     """
-    return {"chart_id": chart_id, "x": [1, 2, 3], "y": [2, 4, 8]}
+    print(region, date_start, date_end)
+    if not chart_name:
+        return {"error": "request must contain chart_name"}, 400
+
+    if chart_name == "a":
+        return {"chart_name": chart_name, "data": {"x": [1, 2, 3], "y": [2, 4, 8]}}
+
+    if chart_name == "b":
+        return {"chart_name": chart_name, "data": {"x": [1, 2, 3, 4, 5]}}

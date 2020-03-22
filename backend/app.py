@@ -8,18 +8,13 @@ from flask_cors import CORS
 
 load_dotenv(".env")
 
-from backend.routes import hello_world, add_questionnaire_entry, get_chart
+from backend.routes import *
 
 app = connexion.App(
     __name__, options={"swagger_ui": os.environ.get("SWAGGER_UI", False)}
 )
 CORS(app.app)
-app.add_api(
-    "app.yml",
-    # strict_validation=True,
-    # validate_responses=True,
-    # validator_map={"body": None},
-)
+app.add_api("app.yml")
 application = app.app
 
 if __name__ == "__main__":

@@ -21,24 +21,6 @@ tags:
 - name: questionnaire
 - name: visualization
 paths:
-  /hello_world:
-    get:
-      summary: "Gets Hello World Message"
-      operationId: app.hello_world
-      tags:
-      - test
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/Test'
-        400:
-          description: Invalid status value
-          content: {}
   /questionnaire_entry:
     put:
       summary: "Put a new questionnaire entry."
@@ -54,19 +36,33 @@ paths:
       responses:
         400:
           description: "Invalid ID supplied"
-  /chart/{chart_id}:
+  /chart:
     get:
       summary: "Request data for a visualization chart."
       operationId: app.get_chart
       tags:
         - "visualization"
       parameters:
-        - in: path
-          name: chart_id
+        - in: query
+          name: chart_name
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+        - in: query
+          name: region
+          schema:
+            type: string
+        - in: query
+          name: date_start
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: date_end
+          schema:
+            type: string
+            format: date
+
       responses:
         200:
           description: successful operation
@@ -95,12 +91,11 @@ components:
     Chart:
       type: object
       required:
-        - chart_id
+        - chart_name
         - data
       properties:
-        chart_id:
-          type: integer
-          format: int64
+        chart_name:
+          type: string
         data:
           type: object
     Questionnaire:
