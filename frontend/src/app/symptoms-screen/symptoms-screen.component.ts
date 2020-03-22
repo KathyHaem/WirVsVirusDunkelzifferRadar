@@ -25,27 +25,27 @@ export class SymptomsScreenComponent implements OnInit {
 
   createFormGroup(): FormGroup {
     return new FormGroup({
-      coughForm: new FormControl(),
+      cough: new FormControl(),
       coughData: new FormGroup({
-        coughDryForm: new FormControl(),
-        coughProductiveForm: new FormControl(),
-        coughPainfulForm: new FormControl()
+        coughDry: new FormControl(),
+        coughProductive: new FormControl(),
+        coughPainful: new FormControl()
       }),
-      feverForm: new FormControl(),
+      fever: new FormControl(),
       feverData: new FormGroup({
-        feverSuspectedForm: new FormControl(),
-        feverConfirmedForm: new FormControl()
+        feverSuspected: new FormControl(),
+        feverConfirmed: new FormControl()
       }),
-      noseForm: new FormControl(),
-      painForm: new FormControl(),
+      nose: new FormControl(),
+      pain: new FormControl(),
       painData: new FormGroup({
-        painHeadForm: new FormControl(),
-        painLimbsForm: new FormControl()
+        painHead: new FormControl(),
+        painLimbs: new FormControl()
       }),
-      diarrheaForm: new FormControl(),
-      throatForm: new FormControl(),
-      dyspneaForm: new FormControl(),
-      fatigueForm: new FormControl(),
+      diarrhea: new FormControl(),
+      throat: new FormControl(),
+      dyspnea: new FormControl(),
+      fatigue: new FormControl(),
     });
   }
 

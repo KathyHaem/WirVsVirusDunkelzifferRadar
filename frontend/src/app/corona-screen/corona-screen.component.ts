@@ -11,8 +11,6 @@ import {ResponseCompilerService} from "../response-data/ResponseCompilerService"
 export class CoronaScreenComponent implements OnInit {
   public isYesCollapsed: boolean =true;
   public isPositiveCollapsed: boolean =true;
-  public coronaTested: boolean = true;
-  public positiveTest: boolean = true;
 
   public coronaScreenForm: FormGroup;
 
@@ -27,13 +25,9 @@ export class CoronaScreenComponent implements OnInit {
 
   createFormGroup(): FormGroup {
     return new FormGroup({
-      coronaTestedForm: new FormControl(),
-      yesData: new FormGroup({
-         positiveTestForm: new FormControl(),
-         positiveData: new FormGroup({
-           coronaDateForm: new FormControl(),
-      }),
-      })
+      coronaTested: new FormControl(),
+      positiveTest: new FormControl(),
+      testDate: new FormControl()
     });
   }
 
@@ -43,11 +37,4 @@ export class CoronaScreenComponent implements OnInit {
     this.complete.emit(true);
   }
 
-  setCoronaTested(coronaTested: boolean) {
-    this.coronaTested = coronaTested;
-  }
-
-  setPositiveTest(positiveTest: boolean) {
-    this.positiveTest = positiveTest;
-  }
 }

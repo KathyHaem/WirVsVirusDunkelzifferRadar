@@ -8,58 +8,61 @@ import {
   WelcomeScreenResponse
 } from "./FormResponse";
 
+import {Questionnaire} from "../../api/model/questionnaire"
+
 @Injectable({
   providedIn: 'root'
 })
 export class ResponseCompilerService {
-  private response: FormResponse;
+  private response: Questionnaire;
 
   constructor() {
-    this.response = new FormResponse();
+    this.response = <Questionnaire>{};
   }
 
   public isFirstTime(): boolean {
-    if (this.response.seenBefore == undefined) return true;
-    else return !this.response.seenBefore;
+    if (this.response.first_time == undefined) return true;
+    else return !this.response.first_time;
   }
 
   addWelcomeScreenData(value: WelcomeScreenResponse): void {
     console.log(value);
-    this.response.seenBefore = value.seenBefore === "yes";
+    this.response.first_time = value.seenBefore === "yes";
     if (value.personalData) {
-      this.response.personalData = <PersonalData>{};
-      this.response.personalData.age = value.personalData.age || undefined;
-      this.response.personalData.gender = value.personalData.gender || undefined;
-      this.response.personalData.postcode = value.personalData.postcode || undefined;
+      this.response.age = value.personalData.age || undefined;
+      this.response.gender = value.personalData.gender || undefined;
+      this.response.zip_code = value.personalData.postcode || undefined;
       return;
     }
-    this.response.personalData = undefined;
   }
 
   addSymptomsScreenData(value: SymptomsScreenResponse): void {
     console.log(value);
-    if (value.symptoms) {
-      this.response.cough = ;
-      this.response.cough_dry = ;
-      this.response.cough_productive = ;
-      this.response.cough_painful = ;
-      this.response.fever = ;
-      this.response.fever_suspected = ;
-      this.response.fever_confirmed = ;
-      this.response.nose_affected = ;
-      this.response.pain = ;
-      this.response.pain_head = ;
-      this.response.pain_limbs = ;
-      this.response.diarrhea = ;
-      this.response.throat = ;
-      this.response.dyspnea = ;
-      this.response.fatigue = ;
-    }
+    this.response.cough = value.cough || undefined;
+    this.response.cough_dry = value.coughData.coughDry || undefined;
+    this.response.cough_productive = value.coughData.coughProductive || undefined;
+    this.response.cough_painful = value.coughData.coughPainful || undefined;
+    this.response.fever = value.fever || undefined;
+    this.response.fever_suspected = value.feverData.feverSuspected || undefined;
+    this.response.fever_confirmed = value.feverData.feverConfirmed || undefined;
+    this.response.nose_affected = value.nose || undefined;
+    this.response.pain = value.pain || undefined;
+    this.response.pain_head = value.painData.painHead || undefined;
+    this.response.pain_limbs = value.painData.painLimbs || undefined;
+    this.response.diarrhea = value.diarrhea || undefined;
+    this.response.throat = value.throat || undefined;
+    this.response.dyspnea = value.dyspnea || undefined;
+    this.response.fatigue = value.fatigue || undefined;
+    return;
   }
 
 
   addCoronaScreenData(value: CoronaScreenResponse): void {
     console.log(value);
+    this.response.corona_test = value.coronaTested || undefined;
+    this.response.corona_positive = value.positiveTest || undefined;
+    this.response.corona_date = value.testDate || undefined;
+    return;
   }
 
   addConditionsScreenData(value: ConditionsScreenResponse): void {
