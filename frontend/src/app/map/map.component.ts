@@ -59,6 +59,7 @@ export class MapComponent {
                   data: [{'id': id, 'value': Math.floor(Math.random() * 100), 'name': id}],
                   joinBy: 'id' });
               }
+              
           },
           drillup(e) { 
             let t = drillStack.pop(); this.setTitle({text: drillStack[drillStack.length - 1]});
@@ -78,6 +79,97 @@ export class MapComponent {
       }    
     };
 
+    chart: Highcharts.Options = {
+      title: {
+        text: 'Line Graph'
+      },
+      xAxis: {
+        title: {
+          text: "Time"
+        }
+      },
+      yAxis: {
+        title: {
+          text: "Infected"
+        }
+      },
+      series :[{ 
+        data: [1, 2.5, 5.5, 10.0, 15.0]
+      }]
+      } as Highcharts.Options;
+
+    chart2: Highcharts.Options = {
+        title: {
+          text: 'Line Graph 2'
+        },
+        xAxis: {
+          title: {
+            text: "Time"
+          }
+        },
+        yAxis: {
+          title: {
+            text: "Cumul. Infected"
+          }
+        },
+        series :[{ 
+          data: [3.5, 10.0, 20.0, 35.0, 50.0]
+        }]
+        } as Highcharts.Options;
+
+    pie: Highcharts.Options = {
+      chart: {
+        type: 'pie'
+      },
+      title: {
+        text: "Pie Chart"
+      },
+      series: [{ 
+        name: 'Pies',
+        colorByPoint: true,
+        type: 'pie',
+        data: [
+        {
+          name: 'Pie 1',
+          y: 50.0
+        },
+        {
+          name: 'Pie 2',
+          y: 25.0
+        },
+        {
+          name: 'Pie 3',
+          y: 13.0
+        },
+        {
+          name: 'Pie 4',
+          y: 12.0
+        }]
+    }
+    ]
+    };
+
+    bar: Highcharts.Options = {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: "Column Chart"
+      },
+      xAxis: {
+        categories: [ '01.03', '02.03', '03.03', '04.03', '05.03', '06.03', '07.03', '08.03', '09.03', '10.03', '11.03', '12.03', '13.03', '14.03',]
+      },
+      series: [{
+        name: 'Deaths',
+        type: 'column',
+        data: [5, 10, 15, 30, 60, 120, 240, 300, 330, 100, 150, 400, 450, 450]
+      }]
+    }
+
+    updateCharts(id) {
+
+    }
+
     constructor() { 
       let id = '';
       let data = [];
@@ -87,29 +179,6 @@ export class MapComponent {
         if(i < 10)
           s = "0" + s;
         data.push({name: s, 'value': i, 'drilldown': s, 'id': s});
-
-        // let drilldownData = [];
-        // for(let j = 0; j < 10; j++) {
-        //   let t = i.toString() + j.toString();
-        //   drilldownData.push({'id': t, 'value': i*10 + j, 'drilldown': t, 'name': t});
-        // }
-
-        // let mapData = require(`src/assets/${s}.geo.json`);
-        // drilldown.push({ id: s,
-        // type: 'map',
-        // mapData: mapData,
-        // data: [drilldownData],
-        // joinBy: 'id' });
-
-        // for(let j = 0; j < 10; j++) {
-        //   let t = i.toString() + j.toString();
-        //   mapData = require(`src/assets/${t}.geo.json`);
-        //   drilldown.push({ id: t,
-        //   type: 'map',
-        //   mapData: mapData,
-        //   data: [{'id': t, 'value': i*10 + j, 'name': t}],
-        //   joinBy: 'id' });
-        // }
       }
       this.chartMap.series.push({
         name: 'Random data',
@@ -129,12 +198,19 @@ export class MapComponent {
         joinBy: 'id'
       });
       this.chartMap.drilldown.series = drilldown;
-      
     }
 
     ngOnInit(): void {
+      getCint
+      let c = Highcharts.mapChart('map-container', this.chartMap);
 
-      Highcharts.mapChart('container', this.chartMap);
+      Highcharts.chart('graph1-container', this.chart);
+
+      Highcharts.chart('graph2-container', this.chart);
+
+      Highcharts.chart('pie-container', this.pie);
+
+      Highcharts.chart('bar-container', this.bar)
     }
 }
 
