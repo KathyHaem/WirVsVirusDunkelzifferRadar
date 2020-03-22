@@ -201,7 +201,6 @@ export class MapComponent {
     }
 
     ngOnInit(): void {
-      getCint
       let c = Highcharts.mapChart('map-container', this.chartMap);
 
       Highcharts.chart('graph1-container', this.chart);
