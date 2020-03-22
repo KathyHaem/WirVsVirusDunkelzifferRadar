@@ -13,6 +13,7 @@ export class QuestionnaireComponent implements OnInit {
 
   ngOnInit(): void {
     this.welcomeScreenActive = true;
+    this.symptomsScreenActive = false;
   }
 
   goToSymptomsScreen(event: boolean) {

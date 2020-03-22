@@ -35,12 +35,10 @@ export class WelcomeScreenComponent implements OnInit {
     });
   }
 
-  public nextScreen(): void {
-
-  }
-
   onSubmit(): void {
+    // todo validation?
     this.responseCompilerService.addWelcomeScreenData(this.welcomeScreenForm.value);
+    this.complete.emit(true);
   }
 
   setSeenBefore(seenBefore: boolean) {

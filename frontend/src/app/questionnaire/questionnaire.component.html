@@ -1,3 +1,2 @@
 <app-welcome-screen *ngIf="this.welcomeScreenActive" (complete)="this.goToSymptomsScreen($event)"></app-welcome-screen>
-
-<app-progress-bar [progressValue]="20"></app-progress-bar>
+<app-symptoms-screen *ngIf="this.symptomsScreenActive"></app-symptoms-screen>
