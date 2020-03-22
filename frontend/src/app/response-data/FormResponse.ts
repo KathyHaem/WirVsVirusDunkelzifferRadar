@@ -30,10 +30,6 @@ export interface CoronaScreenResponse {
 }
 
 export interface ConditionsScreenResponse {
-  existingConditions?: ExistingConditions;
-}
-
-export interface ExistingConditions {
   asthma?: boolean;
   allergies?: boolean;
   hypertension?: boolean;

@@ -9,6 +9,7 @@ import {
 } from "./FormResponse";
 
 import {Questionnaire} from "../../api/model/questionnaire"
+import {QuestionnaireService} from "../../api";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ import {Questionnaire} from "../../api/model/questionnaire"
 export class ResponseCompilerService {
   private response: Questionnaire;
 
-  constructor() {
+  constructor(private questionnaireService: QuestionnaireService) {
     this.response = <Questionnaire>{};
   }
 
@@ -53,23 +54,25 @@ export class ResponseCompilerService {
     this.response.throat = value.throat || undefined;
     this.response.dyspnea = value.dyspnea || undefined;
     this.response.fatigue = value.fatigue || undefined;
-    return;
   }
-
 
   addCoronaScreenData(value: CoronaScreenResponse): void {
     console.log(value);
     this.response.coronaTest = value.coronaTested || undefined;
     this.response.coronaPositive = value.positiveTest || undefined;
     this.response.coronaDate = value.testDate || undefined;
-    return;
   }
 
   addConditionsScreenData(value: ConditionsScreenResponse): void {
     console.log(value);
+    this.response.asthma = value.asthma || undefined;
+    this.response.allergy = value.allergies || undefined;
+    this.response.bloodPressure = value.hypertension || undefined;
+    this.response.diabetes = value.diabetes || undefined;
+    this.response.otherIllness = value.other || undefined;
   }
 
   public submitData(): void {
-    // TODO send to API
+    this.questionnaireService.appAddQuestionnaireEntry(this.response).toPromise().then(() => console.log("SUCCESS!"));
   }
 }
