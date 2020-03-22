@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {FormResponse, PersonalData, WelcomeScreenResponse} from "./FormResponse";
+import {FormResponse, PersonalData, WelcomeScreenResponse, SymptomsScreenResponse, CoronaScreenResponse} from "./FormResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +22,13 @@ export class ResponseCompilerService {
       return;
     }
     this.response.personalData = undefined;
+  }
+
+  addSymptomsScreenData(value: SymptomsScreenResponse): void {
+    console.log(value);
+  }
+
+  addCoronaScreenData(value: CoronaScreenResponse): void {
+    console.log(value);
   }
 }
