@@ -7,15 +7,22 @@ export class FormResponse {
 
 export interface WelcomeScreenResponse {
   seenBefore: boolean;
-  personalData?: PersonalData
+  personalData?: PersonalData;
 }
 
 export interface SymptomsScreenResponse {
-  symptoms?: Symptoms
+  symptoms?: Symptoms;
 }
 
 export interface CoronaScreenResponse {
-  testStatus?: TestStatus
+  testStatus?: TestStatus;
+}
+
+interface ExistingConditions {
+}
+
+export interface ConditionsScreenResponse {
+  existingConditions?: ExistingConditions;
 }
 
 export interface PersonalData {

@@ -1,5 +1,12 @@
 import {Injectable} from '@angular/core';
-import {FormResponse, PersonalData, WelcomeScreenResponse, SymptomsScreenResponse, CoronaScreenResponse} from "./FormResponse";
+import {
+  ConditionsScreenResponse,
+  CoronaScreenResponse,
+  FormResponse,
+  PersonalData,
+  SymptomsScreenResponse,
+  WelcomeScreenResponse
+} from "./FormResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +16,11 @@ export class ResponseCompilerService {
 
   constructor() {
     this.response = new FormResponse();
+  }
+
+  public isFirstTime(): boolean {
+    if (this.response.seenBefore == undefined) return true;
+    else return !this.response.seenBefore;
   }
 
   addWelcomeScreenData(value: WelcomeScreenResponse): void {
@@ -29,6 +41,9 @@ export class ResponseCompilerService {
   }
 
   addCoronaScreenData(value: CoronaScreenResponse): void {
+  }
+
+  addConditionsScreenData(value: ConditionsScreenResponse): void {
     console.log(value);
   }
 }
