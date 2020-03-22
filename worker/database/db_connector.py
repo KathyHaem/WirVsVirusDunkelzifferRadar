@@ -1,7 +1,7 @@
 import psycopg2
 import pandas as pd
 
-TABLE_NAME = "analysis_results"
+TABLE_NAME = "landkreis_analysis"
 
 class DBConnector:
 
@@ -36,7 +36,10 @@ class DBConnector:
         """
         # TODO: Missing ID?
         self.cursor.execute(f"CREATE TABLE {TABLE_NAME} ("
-                            # here goes your schema
+                            "LANDKREIS varchar(64),"
+                            "TAG_DIFF date,"
+                            "FORECAST real,"
+                            "PRIMARY KEY (LANDKREIS, TAG_DIFF)"
                             ");")
         self.conn.commit()
 

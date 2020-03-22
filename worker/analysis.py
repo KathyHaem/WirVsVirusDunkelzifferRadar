@@ -9,7 +9,7 @@ from landkreisAggregate import getAggregatedTable
 
 load_dotenv(".env")
 
-from .db_connector import DBConnector
+from database.db_connector import DBConnector
 
 DB = DBConnector(db_name=os.environ.get('DB_NAME'), db_user=os.environ.get('DB_USER'),
                  db_password=os.environ.get('DB_PASSWORD'), db_host=os.environ.get('DB_HOST'),
@@ -134,17 +134,17 @@ df_rki_covid19_aggregated["tage"] = (
     - df_rki_covid19_aggregated.MELDEDATUM.min()
 )
 
-for land in np.unique(df_rki_covid19_aggregated.BUNDESLAND.values):
-    dictionary = get_dunkelziffer_bundesland(df_rki_covid19_aggregated, land)
-    # print(dictionary)
-    #to do
-    #function to push to datenbank
-    DB.insert_row(dictionary)
-    
+#for land in np.unique(df_rki_covid19_aggregated.BUNDESLAND.values):
+#    list_ = get_dunkelziffer_bundesland(df_rki_covid19_aggregated, land)
+#    for i in range(0, len(list_)):
+#        dictionary = {'BUNDESLAND': land, 'TAG_DIFF': list_[i][0],
+#                        'FORECAST': list_[i][1]}
+#        DB.insert_row(dictionary)
+
 for kreis in np.unique(df_rki_covid19_aggregated.LANDKREIS.values):
-    dictionary = get_dunkelziffer_landkreis(df_rki_covid19_aggregated, kreis)
-    # print(dictionary)
-    #to do
-    #function to push to datenbank
-    DB.insert_row(dictionary)
+    list_ = get_dunkelziffer_landkreis(df_rki_covid19_aggregated, kreis)
+    for i in range(0, len(list_)):
+        dictionary = {'LANDKREIS': kreis, 'TAG_DIFF': list_[i][0], 'FORECAST':
+                        list_[i][1]}
+        DB.insert_row(dictionary)
     
