@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
+import {Gender} from "../response-data/FormResponse"
 
 @Component({
   selector: 'app-welcome-screen',
@@ -8,14 +9,33 @@ import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 })
 export class WelcomeScreenComponent implements OnInit {
 
-  public seenBefore = new FormControl("no");
-  public myForm: FormGroup;
+  public genders = Object.values(Gender);
 
-  constructor(private formBuilder: FormBuilder) {}
+  public welcomeScreenForm: FormGroup;
 
-  ngOnInit() {
-    this.myForm = this.formBuilder.group({
-      radio: 'Nein'
+  constructor(private formBuilder: FormBuilder) {
+  }
+
+  ngOnInit(): void {
+    this.welcomeScreenForm = this.createFormGroup();
+  }
+
+  createFormGroup(): FormGroup {
+    return new FormGroup({
+      seenBefore: new FormControl(),
+      personalData: new FormGroup({
+        age: new FormControl(),
+        gender: new FormControl(),
+        postcode: new FormControl()
+      })
     });
+  }
+
+  public nextScreen(): void {
+
+  }
+
+  onSubmit() {
+
   }
 }
