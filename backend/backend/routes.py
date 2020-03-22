@@ -34,8 +34,12 @@ def add_questionnaire_entry(body):
         tuple: status message.
     """
     if body:
+        body["entry_date"] = dt.datetime.today().isoformat()
+        if "other_illnes" in body:
+            body["other_illness"] = body["other_illnes"]
+            del body["other_illnes"]
         if "corona_date" in body:
-            body['corona_date'] = dt.datetime.fromtimestamp(body['corona_date'])
+            body['corona_date'] = dt.datetime.fromisoformat(body['corona_date'])
         DB.insert_row(body)
     else:
         return {"error": "no questionnaire body"}, 400
