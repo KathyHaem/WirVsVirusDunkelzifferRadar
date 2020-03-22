@@ -9,6 +9,7 @@ DB = DBConnector(db_name=os.environ.get('DB_NAME'), db_user=os.environ.get('DB_U
                  db_port=os.environ.get('DB_PORT'), db_ssl_cert=os.environ.get('DB_SSL_CERT'),
                  db_ssl_key=os.environ.get('DB_SSL_KEY'))
 
+
 def hello_world():
     """
     Returns mock data.
@@ -20,6 +21,7 @@ def hello_world():
         "test_id": 1,
         "message": "hello world"
     }
+
 
 def add_questionnaire_entry(body):
     """
@@ -35,14 +37,10 @@ def add_questionnaire_entry(body):
         if "corona_date" in body:
             body['corona_date'] = dt.datetime.fromtimestamp(body['corona_date'])
         DB.insert_row(body)
-    if body.get("corona_positive"):
-        return (
-            {
-                "error": "He's dead Jim!"
-            },
-            400,
-        )
+    else:
+        return {"error": "no questionnaire body"}, 400
     return {}, 200
+
 
 def get_chart(chart_id):
     """
@@ -53,4 +51,4 @@ def get_chart(chart_id):
     Returns:
 
     """
-    return {"chart_id": chart_id, "x":[1,2,3], "y":[2,4,8]}
+    return {"chart_id": chart_id, "x": [1, 2, 3], "y": [2, 4, 8]}
