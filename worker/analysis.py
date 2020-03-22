@@ -1,9 +1,20 @@
+import os
 import numpy as np
 import pandas as pd
+from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from scipy.optimize import curve_fit
 from scipy.optimize import fsolve
 from landkreisAggregate import getAggregatedTable
+
+load_dotenv(".env")
+
+from .db_connector import DBConnector
+
+DB = DBConnector(db_name=os.environ.get('DB_NAME'), db_user=os.environ.get('DB_USER'),
+                 db_password=os.environ.get('DB_PASSWORD'), db_host=os.environ.get('DB_HOST'),
+                 db_port=os.environ.get('DB_PORT'), db_ssl_cert=os.environ.get('DB_SSL_CERT'),
+                 db_ssl_key=os.environ.get('DB_SSL_KEY'))
 
 # Model definition
 def logistic_model(x, a, b, c):
@@ -125,14 +136,15 @@ df_rki_covid19_aggregated["tage"] = (
 
 for land in np.unique(df_rki_covid19_aggregated.BUNDESLAND.values):
     dictionary = get_dunkelziffer_bundesland(df_rki_covid19_aggregated, land)
-    print(dictionary)
+    # print(dictionary)
     #to do
     #function to push to datenbank
+    DB.insert_row(dictionary)
     
 for kreis in np.unique(df_rki_covid19_aggregated.LANDKREIS.values):
     dictionary = get_dunkelziffer_landkreis(df_rki_covid19_aggregated, kreis)
-    print(dictionary)
+    # print(dictionary)
     #to do
     #function to push to datenbank
-
+    DB.insert_row(dictionary)
     

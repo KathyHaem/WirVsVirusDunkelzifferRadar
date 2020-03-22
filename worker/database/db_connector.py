@@ -1,6 +1,7 @@
 import psycopg2
 import pandas as pd
 
+TABLE_NAME = "analysis_results"
 
 class DBConnector:
 
@@ -23,7 +24,7 @@ class DBConnector:
 
         # check if table exists. If it does not exist, a new table is created
         self.cursor.execute("SELECT EXISTS(SELECT * FROM information_schema.tables "
-                            "WHERE table_name='dunkelziffer_radar')")
+                            f"WHERE table_name='{TABLE_NAME}')")
         if not self.cursor.fetchone()[0]:
             self._setup_table()
 
@@ -34,37 +35,9 @@ class DBConnector:
         :return: None
         """
         # TODO: Missing ID?
-        self.cursor.execute("CREATE TABLE dunkelziffer_radar ("
-                            "uuid UUID, "
-                            "entry_date DATE, "
-                            "first_time BOOLEAN, "
-                            "gender VARCHAR, "
-                            "age INTEGER, "
-                            "zip_code INTEGER, "
-                            "cough BOOLEAN, "
-                            "cough_dry BOOLEAN, "
-                            "cough_productive BOOLEAN, "
-                            "cough_painful BOOLEAN, "
-                            "fever BOOLEAN, "
-                            "fever_suspected BOOLEAN, "
-                            "fever_confirmed BOOLEAN, "
-                            "nose_affected BOOLEAN, "
-                            "pain BOOLEAN, "
-                            "pain_head BOOLEAN, "
-                            "pain_limbs BOOLEAN, "
-                            "diarrhea BOOLEAN, "
-                            "throat BOOLEAN, "
-                            "dyspnea BOOLEAN, "
-                            "fatigue BOOLEAN, "
-                            "corona_test BOOLEAN, "
-                            "corona_positive BOOLEAN, "
-                            "corona_date DATE, "
-                            "pre_illness VARCHAR, "
-                            "asthma BOOLEAN, "
-                            "allergy BOOLEAN, "
-                            "blood_pressure BOOLEAN, "
-                            "diabetes BOOLEAN, "
-                            "other_illness BOOLEAN);")
+        self.cursor.execute(f"CREATE TABLE {TABLE_NAME} ("
+                            # here goes your schema
+                            ");")
         self.conn.commit()
 
     def close_connection(self):
@@ -86,8 +59,7 @@ class DBConnector:
         """
         fields, values = zip(*data.items())
         n = len(values)
-        query = "INSERT INTO dunkelziffer_radar ({0}) VALUES ({1})".format(", ".join(fields),
-                                                                           ", ".join(["%s"] * n))
+        query = f"INSERT INTO {TABLE_NAME} ({', '.join(fields)}) VALUES ({', '.join(['%s'] * n)})"
         self.cursor.execute(query, values)
         self.conn.commit()
 
@@ -97,7 +69,7 @@ class DBConnector:
 
         :return: pandas.DataFrame: complete data of the dunkelziffer_radar table.
         """
-        self.cursor.execute("SELECT * FROM dunkelziffer_radar")
+        self.cursor.execute(f"SELECT * FROM {TABLE_NAME}")
         data = self.cursor.fetchall()
         columns = [desc[0] for desc in self.cursor.description]
         return pd.DataFrame(data, columns=columns)
