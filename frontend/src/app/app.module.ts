@@ -8,7 +8,7 @@ import {ProgressBarComponent} from './progress-bar/progress-bar.component';
 import {ApiModule} from "../api";
 import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
-import {ButtonsModule, BsDropdownModule} from "ngx-bootstrap";
+import {ButtonsModule, BsDropdownModule, BsDropdownDirective} from "ngx-bootstrap";
 import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 
 @NgModule({
@@ -24,7 +24,8 @@ import {ProgressbarModule} from "ngx-bootstrap/progressbar";
     HttpClientModule,
     ReactiveFormsModule,
     ButtonsModule,
-    ProgressbarModule.forRoot()
+    ProgressbarModule.forRoot(),
+    BsDropdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

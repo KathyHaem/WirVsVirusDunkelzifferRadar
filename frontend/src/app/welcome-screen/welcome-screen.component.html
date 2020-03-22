@@ -2,41 +2,29 @@
 <div class="spacer"></div>
 <div>
 
-  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
-    <div formGroupName="personalData" novalidate>
-      <input formControlName="email"/> <input formControlName="mobile"/>
-      <select formControlName="country">
-        <option *ngFor="let country of countries" [value]="country"
-        >{{country}}</option
-        >
-      </select>
-    </div>
-    <select formControlName="requestType">
-      <option *ngFor="let requestType of requestTypes" [value]="requestType"
-      >{{requestType}}</option
-      >
-    </select>
-    <input formControlName="text"/>
-  </form>
-
-
   <form action="" [formGroup]="welcomeScreenForm" (ngSubmit)="this.onSubmit()">
     <h3>Warst du schon mal hier?</h3>
     <div class="spacer"></div>
-    <div formControlName="radio" class="form-inline">
-      <label><input type="radio" id="yes" name="seenBefore" value="yes"><span>Ja</span></label>
-      <label class="right-align"><input type="radio" id="no" name="seenBefore" value="no"><span>Nein</span></label>
+    <div class="form-inline">
+      <label><input type="radio" id="yes" formControlName="seenBefore" value="yes"><span>Ja</span></label>
+      <label><input type="radio" id="no" formControlName="seenBefore" value="no"><span>Nein</span></label>
     </div>
 
     <div formGroupName="personalData">
       <div class="spacer"></div>
       <label for="age">Alter:</label>
-      <input formControlName="age" type="text" id="age">
+      <span class="right-align">
+        <input formControlName="age" type="text" id="age">
+      </span>
       <br>
       <label for="gender">Geschlecht:</label>
-      <select formControlName="gender" id="gender">
-        <option *ngFor="let genderOption of this.genders" [value]="gender">{{genderOption}}</option>
-      </select>
+      <span>
+        <select formControlName="gender" id="gender">
+      <option *ngFor="let genderOption of this.genders">
+        {{genderOption}}
+      </option>
+    </select>
+      </span>
       <br>
       <label for="postcode">Postleitzahl:</label>
       <input formControlName="postcode" type="text" id="postcode">
@@ -46,11 +34,13 @@
     <br>
 
     <div class="spacer"></div>
-    <button type="submit" (click)="this.nextScreen()"
-            [disabled]="welcomeScreenForm.pristine"
-            class="btn btn-default right-align">
-      Weiter
-    </button>
+    <div class="right-align">
+      <button type="submit" (click)="this.nextScreen()"
+              [disabled]="welcomeScreenForm.pristine"
+              class="btn btn-default">
+        Weiter
+      </button>
+    </div>
 
   </form>
 
