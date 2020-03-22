@@ -10,6 +10,14 @@ export interface WelcomeScreenResponse {
   personalData?: PersonalData
 }
 
+export interface SymptomsScreenResponse {
+  symptoms?: Symptoms
+}
+
+export interface CoronaScreenResponse {
+  testStatus?: TestStatus
+}
+
 export interface PersonalData {
   age: number;
   gender: Gender;

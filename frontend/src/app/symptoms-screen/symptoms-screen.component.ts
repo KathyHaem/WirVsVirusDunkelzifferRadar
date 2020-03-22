@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
 import {Gender} from "../response-data/FormResponse"
+import {ResponseCompilerService} from "../response-data/ResponseCompilerService";
 
 @Component({
   selector: 'app-symptoms-screen',
@@ -11,11 +12,12 @@ export class SymptomsScreenComponent implements OnInit {
   public isCoughCollapsed=true;
   public isFeverCollapsed=true;
   public isPainCollapsed=true;
-  public genders = Object.values(Gender);
 
   public symptomsScreenForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  @Output() complete: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+   constructor(private responseCompilerService: ResponseCompilerService) {
   }
 
   ngOnInit(): void {
@@ -52,7 +54,9 @@ export class SymptomsScreenComponent implements OnInit {
 
   }
 
-  onSubmit() {
-
+  onSubmit(): void {
+    // todo validation?
+    this.responseCompilerService.addSymptomsScreenData(this.symptomsScreenForm.value);
+    this.complete.emit(true);
   }
 }

@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
 import {Gender} from "../response-data/FormResponse"
+import {ResponseCompilerService} from "../response-data/ResponseCompilerService";
 
 @Component({
   selector: 'app-corona-screen',
@@ -15,7 +16,9 @@ export class CoronaScreenComponent implements OnInit {
 
   public coronaScreenForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  @Output() complete: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+   constructor(private responseCompilerService: ResponseCompilerService) {
   }
 
   ngOnInit(): void {
@@ -38,8 +41,10 @@ export class CoronaScreenComponent implements OnInit {
 
   }
 
-  onSubmit() {
-
+  onSubmit(): void {
+    // todo validation?
+    this.responseCompilerService.addCoronaScreenData(this.coronaScreenForm.value);
+    this.complete.emit(true);
   }
 
   setCoronaTested(coronaTested: boolean) {

@@ -11,8 +11,11 @@
           <div class="btn-group-vertical" formGroupName="yesData" style="margin-left: 20px">
             <label><input type="radio" id="positive" formControlName="positiveTestForm" value="yes" (ngModelChange)="this.setPositiveTest(true)" (click)="isPositiveCollapsed = !isPositiveCollapsed" [attr.aria-expanded]="!isPositiveCollapsed" aria-controls="collapsePositive"><span> positiv</span></label>
             <div id="collapsePositive" [collapse]="isPositiveCollapsed" [isAnimated]="true">
-              <div class="col-xs-12 col-12 col-md-4 form-group" formGroupName="positiveData" style="margin-left: 20px">
-                <input type="text" placeholder="Datum" class="form-control" bsDatepicker [bsConfig]="{ isAnimated: true }">
+              <div class="row" formGroupName="positiveData" style="margin-left: 20px">
+                <div class="col-xs-12 col-12 col-md-8 form-group">
+                  <span>Datum: </span>
+                  <input type="text" placeholder="Datum" class="form-control" bsDatepicker [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD.MM.YYYY'}">
+                </div>
               </div>
             </div>
             <label><input type="radio" id="negative" formControlName="positiveTestForm" value="no" (ngModelChange)="this.setPositiveTest(false)"><span> negativ</span></label>
@@ -30,7 +33,7 @@
 
     <div class="spacer"></div>
     <div class="right-align">
-      <button type="submit" (click)="this.nextScreen()"
+      <button type="submit"
               [disabled]="coronaScreenForm.pristine"
               class="btn btn-default" style="margin-left: 8px">
         Weiter
@@ -39,6 +42,6 @@
 
   </form>
 
-  <app-progress-bar [progressValue]="20"></app-progress-bar>
+  <app-progress-bar [progressValue]="60"></app-progress-bar>
 
 </div>

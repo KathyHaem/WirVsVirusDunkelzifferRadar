@@ -8,16 +8,23 @@ import { Component, OnInit } from '@angular/core';
 export class QuestionnaireComponent implements OnInit {
   public welcomeScreenActive: boolean;
   public symptomsScreenActive: boolean;
+  public coronaScreenActive: boolean;
 
   constructor() { }
 
   ngOnInit(): void {
     this.welcomeScreenActive = true;
     this.symptomsScreenActive = false;
+    this.coronaScreenActive = false;
   }
 
   goToSymptomsScreen(event: boolean) {
     this.welcomeScreenActive = false;
     this.symptomsScreenActive = true;
+  }
+
+  goToCoronaScreen(event: boolean) {
+    this.symptomsScreenActive = false;
+    this.coronaScreenActive = true;
   }
 }
