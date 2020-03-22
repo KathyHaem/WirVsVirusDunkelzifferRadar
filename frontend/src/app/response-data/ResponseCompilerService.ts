@@ -1,13 +1,25 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {FormResponse, WelcomeScreenResponse} from "./FormResponse";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResponseCompilerService {
+  private response: FormResponse;
 
-  constructor() { }
+  constructor() {
+    this.response = new FormResponse();
+  }
 
-  addWelcomeScreenData(value: any) {
-
+  addWelcomeScreenData(value: WelcomeScreenResponse): void {
+    console.log(value);
+    this.response.seenBefore = value.seenBefore;
+    if (value.personalData) {
+      this.response.personalData.age = value.personalData.age || undefined;
+      this.response.personalData.gender = value.personalData.gender || undefined;
+      this.response.personalData.postcode = value.personalData.postcode || undefined;
+      return;
+    }
+    this.response.personalData = undefined;
   }
 }

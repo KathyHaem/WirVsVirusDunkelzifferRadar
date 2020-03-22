@@ -1,9 +1,19 @@
 export class FormResponse {
-  age: number; // todo or age range?
+  seenBefore: boolean;
+  personalData?: PersonalData;
+  symptoms?: Symptoms;
+  testStatus?: TestStatus;
+}
+
+export interface WelcomeScreenResponse {
+  seenBefore: boolean;
+  personalData?: PersonalData
+}
+
+export interface PersonalData {
+  age: number;
   gender: Gender;
   postcode: string;
-  symptoms: Symptoms;
-  testStatus: TestStatus;
 }
 
 export enum Gender {
