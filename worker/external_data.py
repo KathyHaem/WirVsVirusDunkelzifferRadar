@@ -1,5 +1,4 @@
 import pandas as pd
-import requests
 from collections import defaultdict
 import datetime as dt
 from arcgis.features import Table
