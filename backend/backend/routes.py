@@ -22,9 +22,6 @@ def add_questionnaire_entry(body):
     """
     if body:
         body["entry_date"] = dt.datetime.today().isoformat()
-        if "other_illnes" in body:
-            body["other_illness"] = body["other_illnes"]
-            del body["other_illnes"]
         if "corona_date" in body:
             body['corona_date'] = dt.datetime.fromisoformat(body['corona_date'])
         DB.insert_row(body)
