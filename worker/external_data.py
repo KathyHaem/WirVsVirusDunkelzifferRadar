@@ -127,6 +127,12 @@ def _get_data_from_database(cursor):
                'AnzahlTodesfall', 'Meldedatum']
     return pd.DataFrame(data, columns=columns)
 
+def _get_data_from_database_aggregated(cursor):
+    cursor.execute(' SELECT * FROM aggregated_rki_covid_19')
+    data = cursor.fetchall()
+    columns = ['BUNDESLAND', 'LANDKREIS', 'MELDEDATUM', 'FALL_COUNT',
+        'TODESFALL_COUNT']
+    return pd.DataFrame(data, columns=columns)
 
 def _store_to_database(cursor, data):
     """
@@ -159,8 +165,6 @@ def _store_to_database_aggregated(df, cursor):
                 cursor.execute('INSERT INTO aggregated_rki_covid_19 VALUES (%s, %s, %s, %s, %s)',
                                (row['Bundesland'], row['Landkreis'], row['Meldedatum'],
                                 row['AnzahlFall'], row['AnzahlTodesfall']))
-
-    conn.close()
 
 if __name__=='__main__':
     print(get_current_data(setup=False))
