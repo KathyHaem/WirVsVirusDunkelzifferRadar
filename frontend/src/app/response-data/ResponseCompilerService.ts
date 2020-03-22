@@ -38,7 +38,25 @@ export class ResponseCompilerService {
 
   addSymptomsScreenData(value: SymptomsScreenResponse): void {
     console.log(value);
+    if (value.symptoms) {
+      this.response.cough = ;
+      this.response.cough_dry = ;
+      this.response.cough_productive = ;
+      this.response.cough_painful = ;
+      this.response.fever = ;
+      this.response.fever_suspected = ;
+      this.response.fever_confirmed = ;
+      this.response.nose_affected = ;
+      this.response.pain = ;
+      this.response.pain_head = ;
+      this.response.pain_limbs = ;
+      this.response.diarrhea = ;
+      this.response.throat = ;
+      this.response.dyspnea = ;
+      this.response.fatigue = ;
+    }
   }
+
 
   addCoronaScreenData(value: CoronaScreenResponse): void {
     console.log(value);
