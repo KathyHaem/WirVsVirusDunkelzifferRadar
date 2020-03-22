@@ -2,7 +2,8 @@
 #from connection import pd
 from dotenv import load_dotenv
 from external_data import pd, psycopg2, os
-from external_data import _get_data_from_database, _store_to_database_aggregated
+from external_data import (_get_data_from_database,
+    _store_to_database_aggregated, _get_data_from_database_aggregated)
 
 load_dotenv()
 conn = psycopg2.connect(dbname=os.environ.get('DB_NAME'), user=os.environ.get('DB_USER'),
@@ -20,21 +21,25 @@ df_rki_covid19 = _get_data_from_database(cursor)
 This implements the aggreagtion on landkreis niveau with respect to the
 meldedatum
 """
-print(df_rki_covid19.head())
-df_rki_covid19 = (
-    df_rki_covid19.drop("ObjectId", axis=1)
-    .groupby(["Bundesland", "Landkreis", "Meldedatum"])
-    .sum()
-)
-df_rki_covid19.reset_index(inplace=True)
-print(
-    df_rki_covid19[
-        (df_rki_covid19.Bundesland == "Hessen")
-        & (df_rki_covid19.Landkreis == "SK Offenbach")
-    ]
-)
+#df_rki_covid19 = (
+#    df_rki_covid19.drop("ObjectId", axis=1)
+#    .groupby(["Bundesland", "Landkreis", "Meldedatum"])
+#    .sum()
+#)
+#df_rki_covid19.reset_index(inplace=True)
+#print(
+#    df_rki_covid19[
+#        (df_rki_covid19.Bundesland == "Hessen")
+#        & (df_rki_covid19.Landkreis == "SK Offenbach")
+#    ]
+#)
 
-_store_to_database_aggregated(df_rki_covid19, cursor)
+#_store_to_database_aggregated(df_rki_covid19, cursor)
 
+
+df_rki_covid19_aggregated = _get_data_from_database_aggregated(cursor)
+print(df_rki_covid19_aggregated.head())
+conn.commit()
+cursor.close()
 conn.close()
 
