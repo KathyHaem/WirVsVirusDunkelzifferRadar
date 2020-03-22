@@ -16,7 +16,8 @@ def exponential_model(x, a, b, c):
 
 
 def get_dunkelziffer_bundesland(df_rki_covid19_aggregated, bundesland):
-
+    first_day = df_rki_covid19_aggregated.MELDEDATUM.min()
+    
     df_rki_covid19_aggregated = (
         df_rki_covid19_aggregated.groupby(["BUNDESLAND", "tage"])
         .sum()
@@ -27,7 +28,9 @@ def get_dunkelziffer_bundesland(df_rki_covid19_aggregated, bundesland):
     )
 
     df_rki_covid19_aggregated = df_rki_covid19_aggregated.reset_index()
-
+    
+    backup_date = first_day + df_rki_covid19_aggregated.tage
+    
     df_rki_covid19_aggregated.tage = (
         df_rki_covid19_aggregated.tage / np.timedelta64(1, "D")
     )
@@ -56,27 +59,25 @@ def get_dunkelziffer_bundesland(df_rki_covid19_aggregated, bundesland):
                 adam[c, t, b, :] = exponential_model(x, coef * a, rate, days)
     
     bob = np.mean(adam, axis=(0, 1, 2))
-    #lb = np.percentile(adam, 0.25, axis=(0, 1, 2))
-    #ub = np.percentile(adam, 0.75, axis=(0, 1, 2))
-
-    print(bob)
-    dictionary = bob
-    return dictionary
+    return list(zip(backup_date, bob))
 
 
-def get_dunkelziffer_landkreis(df_rki_covid19_aggregated, kreis):
-
+def get_dunkelziffer_landkreis(df_rki_covid19_aggregated, landkreis):
+    first_day = df_rki_covid19_aggregated.MELDEDATUM.min()
+    
     df_rki_covid19_aggregated = (
         df_rki_covid19_aggregated.groupby(["LANDKREIS", "tage"])
         .sum()
-        .loc[kreis]
+        .loc[landkreis]
         .cumsum()
         .resample("1d")
         .ffill()
     )
 
     df_rki_covid19_aggregated = df_rki_covid19_aggregated.reset_index()
-
+    
+    backup_date = first_day + df_rki_covid19_aggregated.tage
+    
     df_rki_covid19_aggregated.tage = (
         df_rki_covid19_aggregated.tage / np.timedelta64(1, "D")
     )
@@ -105,12 +106,7 @@ def get_dunkelziffer_landkreis(df_rki_covid19_aggregated, kreis):
                 adam[c, t, b, :] = exponential_model(x, coef * a, rate, days)
     
     bob = np.mean(adam, axis=(0, 1, 2))
-    #lb = np.percentile(adam, 0.25, axis=(0, 1, 2))
-    #ub = np.percentile(adam, 0.75, axis=(0, 1, 2))
-
-    print(bob)
-    dictionary = bob
-    return dictionary
+    return list(zip(backup_date, bob))
 
 # Loading Dataframe
 df_rki_covid19_aggregated = getAggregatedTable()
@@ -129,11 +125,13 @@ df_rki_covid19_aggregated["tage"] = (
 
 for land in np.unique(df_rki_covid19_aggregated.BUNDESLAND.values):
     dictionary = get_dunkelziffer_bundesland(df_rki_covid19_aggregated, land)
+    print(dictionary)
     #to do
     #function to push to datenbank
     
 for kreis in np.unique(df_rki_covid19_aggregated.LANDKREIS.values):
     dictionary = get_dunkelziffer_landkreis(df_rki_covid19_aggregated, kreis)
+    print(dictionary)
     #to do
     #function to push to datenbank
 
