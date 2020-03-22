@@ -8,9 +8,6 @@ import MapModule from 'highcharts/modules/map';
 import Drilldown from 'highcharts/modules/drilldown';
 Drilldown(Highcharts);
 
-import HC_customEvents from 'highcharts-custom-events';
-HC_customEvents(Highcharts);
-
 const germany = require('src/assets/plz-1stellig.geo.json');
 const filtered0 = require('src/assets/filtered-0.geo.json');
 const filtered1 = require('src/assets/filtered-1.geo.json');
