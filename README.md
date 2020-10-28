@@ -1,5 +1,6 @@
 # WirVsVirusDunkelzifferRadar
 #WirVsVirus Hackathon, ID0982.
+Aktueller Stand des Projekts: https://gitlab.gwdg.de/dunkelzifferradar
 
 ## Herausforderung
 Wie können wir es schaffen mehr "Licht" in die Dunkelziffer zu bringen, ohne uns nur auf ein System mit begrenzter Kapazität (Tests) zu verlassen?
